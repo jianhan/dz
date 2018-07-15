@@ -13,6 +13,8 @@
         "spatie/eloquent-sortable": "^3.4",
         "spatie/laravel-activitylog": "^2.7",
         "spatie/laravel-backup": "^5.9",
+        "spatie/laravel-collection-macros": "^3.8",
+        "spatie/laravel-cors": "^1.2",
         "spatie/laravel-failed-job-monitor": "^3.0",
         "spatie/laravel-medialibrary": "^7.3",
         "spatie/laravel-permission": "^2.12",
