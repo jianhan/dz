@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2018-07-16 10:01:36.
+    * Generated on 2018-07-16 10:04:35.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -67,7 +67,6 @@ namespace PHPSTORM_META {
         'command.server-monitor:list' => \Spatie\ServerMonitor\Commands\ListHosts::class,
         'command.server-monitor:list-checks' => \Spatie\ServerMonitor\Commands\ListChecks::class,
         'Spatie\UrlSigner\UrlSigner' => \Spatie\UrlSigner\Laravel\UrlSigner::class,
-        'geoip' => \Torann\GeoIP\GeoIP::class,
         'command.ide-helper.generate' => \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand::class,
         'command.ide-helper.models' => \Barryvdh\LaravelIdeHelper\Console\ModelsCommand::class,
         'command.ide-helper.meta' => \Barryvdh\LaravelIdeHelper\Console\MetaCommand::class,
@@ -238,7 +237,6 @@ namespace PHPSTORM_META {
         'command.server-monitor:list' => \Spatie\ServerMonitor\Commands\ListHosts::class,
         'command.server-monitor:list-checks' => \Spatie\ServerMonitor\Commands\ListChecks::class,
         'Spatie\UrlSigner\UrlSigner' => \Spatie\UrlSigner\Laravel\UrlSigner::class,
-        'geoip' => \Torann\GeoIP\GeoIP::class,
         'command.ide-helper.generate' => \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand::class,
         'command.ide-helper.models' => \Barryvdh\LaravelIdeHelper\Console\ModelsCommand::class,
         'command.ide-helper.meta' => \Barryvdh\LaravelIdeHelper\Console\MetaCommand::class,
@@ -409,7 +407,6 @@ namespace PHPSTORM_META {
         'command.server-monitor:list' => \Spatie\ServerMonitor\Commands\ListHosts::class,
         'command.server-monitor:list-checks' => \Spatie\ServerMonitor\Commands\ListChecks::class,
         'Spatie\UrlSigner\UrlSigner' => \Spatie\UrlSigner\Laravel\UrlSigner::class,
-        'geoip' => \Torann\GeoIP\GeoIP::class,
         'command.ide-helper.generate' => \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand::class,
         'command.ide-helper.models' => \Barryvdh\LaravelIdeHelper\Console\ModelsCommand::class,
         'command.ide-helper.meta' => \Barryvdh\LaravelIdeHelper\Console\MetaCommand::class,
@@ -580,7 +577,6 @@ namespace PHPSTORM_META {
         'command.server-monitor:list' => \Spatie\ServerMonitor\Commands\ListHosts::class,
         'command.server-monitor:list-checks' => \Spatie\ServerMonitor\Commands\ListChecks::class,
         'Spatie\UrlSigner\UrlSigner' => \Spatie\UrlSigner\Laravel\UrlSigner::class,
-        'geoip' => \Torann\GeoIP\GeoIP::class,
         'command.ide-helper.generate' => \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand::class,
         'command.ide-helper.models' => \Barryvdh\LaravelIdeHelper\Console\ModelsCommand::class,
         'command.ide-helper.meta' => \Barryvdh\LaravelIdeHelper\Console\MetaCommand::class,
@@ -751,7 +747,6 @@ namespace PHPSTORM_META {
         'command.server-monitor:list' => \Spatie\ServerMonitor\Commands\ListHosts::class,
         'command.server-monitor:list-checks' => \Spatie\ServerMonitor\Commands\ListChecks::class,
         'Spatie\UrlSigner\UrlSigner' => \Spatie\UrlSigner\Laravel\UrlSigner::class,
-        'geoip' => \Torann\GeoIP\GeoIP::class,
         'command.ide-helper.generate' => \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand::class,
         'command.ide-helper.models' => \Barryvdh\LaravelIdeHelper\Console\ModelsCommand::class,
         'command.ide-helper.meta' => \Barryvdh\LaravelIdeHelper\Console\MetaCommand::class,
@@ -922,7 +917,6 @@ namespace PHPSTORM_META {
         'command.server-monitor:list' => \Spatie\ServerMonitor\Commands\ListHosts::class,
         'command.server-monitor:list-checks' => \Spatie\ServerMonitor\Commands\ListChecks::class,
         'Spatie\UrlSigner\UrlSigner' => \Spatie\UrlSigner\Laravel\UrlSigner::class,
-        'geoip' => \Torann\GeoIP\GeoIP::class,
         'command.ide-helper.generate' => \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand::class,
         'command.ide-helper.models' => \Barryvdh\LaravelIdeHelper\Console\ModelsCommand::class,
         'command.ide-helper.meta' => \Barryvdh\LaravelIdeHelper\Console\MetaCommand::class,
@@ -1093,7 +1087,6 @@ namespace PHPSTORM_META {
         'command.server-monitor:list' => \Spatie\ServerMonitor\Commands\ListHosts::class,
         'command.server-monitor:list-checks' => \Spatie\ServerMonitor\Commands\ListChecks::class,
         'Spatie\UrlSigner\UrlSigner' => \Spatie\UrlSigner\Laravel\UrlSigner::class,
-        'geoip' => \Torann\GeoIP\GeoIP::class,
         'command.ide-helper.generate' => \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand::class,
         'command.ide-helper.models' => \Barryvdh\LaravelIdeHelper\Console\ModelsCommand::class,
         'command.ide-helper.meta' => \Barryvdh\LaravelIdeHelper\Console\MetaCommand::class,
