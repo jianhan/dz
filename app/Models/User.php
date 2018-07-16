@@ -12,15 +12,6 @@ class User extends Authenticatable
     use Notifiable, GuardID, SoftDeletes;
 
     /**
-     * The attributes guarded.
-     *
-     * @var array
-     */
-    protected $guarded = [
-        'id'
-    ];
-
-    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array

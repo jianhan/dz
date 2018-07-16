@@ -6,12 +6,19 @@ use App\Traits\GuardID;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Class Category is the model for category.
+ *
+ * @package App
+ */
 class Category extends Model
 {
     use GuardID, SoftDeletes;
 
     /**
      * The ideas that belong to the category.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function ideas()
     {
