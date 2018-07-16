@@ -18,12 +18,14 @@ class CreateIdeasTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->text('description');
+            $table->integer('app_type_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
 
             // constraints
             $table->unique('name', 'name_idx');
             $table->unique('slug', 'slug_idx');
+            $table->foreign('app_type_id')->references('id')->on('app_types')->onDelete('set null');
         });
     }
 

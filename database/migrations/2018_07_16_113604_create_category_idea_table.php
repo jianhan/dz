@@ -19,7 +19,6 @@ class CreateCategoryIdeaTable extends Migration
             $table->integer('idea_id')->unsigned();
             $table->foreign('idea_id')->references('id')->on('ideas')->onDelete('cascade');
             $table->timestamps();
-
             // constraints
             $table->unique(['category_id', 'idea_id'], 'category_idea_idx');
         });

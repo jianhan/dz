@@ -2,14 +2,22 @@
 
 namespace App\Models;
 
-use App\Traits\GuardID;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable, GuardID, SoftDeletes;
+    use Notifiable, SoftDeletes;
+
+    /**
+     * The attributes guarded.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'id'
+    ];
 
     /**
      * The attributes that should be hidden for arrays.

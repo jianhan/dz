@@ -19,6 +19,7 @@ class CreateAppTypesTable extends Migration
             $table->string('slug');
             $table->text('description');
             $table->timestamps();
+            $table->softDeletes();
 
             // constraints
             $table->unique('name', 'name_idx');
