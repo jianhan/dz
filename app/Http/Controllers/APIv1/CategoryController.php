@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\APIv1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
@@ -15,7 +15,6 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**

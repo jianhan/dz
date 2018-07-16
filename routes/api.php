@@ -17,4 +17,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('categories', 'API\\CategoryController');
+
+// App v1 API
+Route::group([
+    'namespace' => 'APIv1',
+    'prefix' => 'v1',
+], function ($router) {
+    require base_path('routes/app_api.v1.php');
+});
