@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\GuardID;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -13,7 +12,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Idea extends Model
 {
-    use GuardID, SoftDeletes;
+    use SoftDeletes;
+
+    /**
+     * The attributes guarded.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'id'
+    ];
 
     /**
      * Get all of the idea's ratings.

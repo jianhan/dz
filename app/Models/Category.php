@@ -13,7 +13,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Category extends Model
 {
-    use GuardID, SoftDeletes;
+    use SoftDeletes;
+
+    /**
+     * The attributes guarded.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'id'
+    ];
 
     /**
      * The ideas that belong to the category.

@@ -13,7 +13,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Rating extends Model
 {
-    use GuardID, SoftDeletes;
+    use SoftDeletes;
+
+    /**
+     * The attributes guarded.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'id'
+    ];
 
     /**
      * Get all of the owning rateable models.

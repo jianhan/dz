@@ -13,7 +13,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class AppType extends Model
 {
-    use GuardID, SoftDeletes;
+    use SoftDeletes;
+
+    /**
+     * The attributes guarded.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'id'
+    ];
 
     /**
      * Get the ideas for the app type.

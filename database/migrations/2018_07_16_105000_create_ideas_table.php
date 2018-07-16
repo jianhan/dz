@@ -26,6 +26,7 @@ class CreateIdeasTable extends Migration
             $table->unique('name', 'name_idx');
             $table->unique('slug', 'slug_idx');
             $table->foreign('app_type_id')->references('id')->on('app_types')->onDelete('set null');
+            $table->index('app_type_id', 'app_type_id_idx');
         });
     }
 
