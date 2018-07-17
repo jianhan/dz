@@ -18,10 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-// App v1 API
-Route::group([
-    'namespace' => 'APIv1',
-    'prefix' => 'v1',
-], function ($router) {
-    require base_path('routes/app_api.v1.php');
+$api = app('Dingo\Api\Routing\Router');
+$api->version('v1', function ($api) {
+    $api->resource('categories', 'App\\Http\\Controllers\\APIv1\\CategoryController');
 });

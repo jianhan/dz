@@ -15,17 +15,14 @@ class AppTypesTableSeeder extends Seeder
         $appTypes = [
             [
                 'name' => 'Web Application',
-                'slug' => 'web-application',
                 'description' => 'Web Application',
             ],
             [
                 'name' => 'Desktop Application',
-                'slug' => 'desktop-application',
                 'description' => 'Desktop Application',
             ],
             [
                 'name' => 'Mobile & tablet Application',
-                'slug' => 'mobile-tablet-application',
                 'description' => 'Mobile & tablet Application',
             ]
         ];

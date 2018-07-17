@@ -173,6 +173,8 @@ return [
         Jrean\UserVerification\UserVerificationServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         \Torann\GeoIP\GeoIPServiceProvider::class,
+        // the driver for Elasticsearch
+        ScoutElastic\ScoutElasticServiceProvider::class,
     ],
 
     /*
