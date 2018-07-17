@@ -1,8 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Traits\GuardID;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -23,6 +22,17 @@ class Category extends Model
     protected $guarded = [
         'id'
     ];
+
+    /**
+     * Automatically set slug.
+     *
+     * @param $value
+     */
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = $value;
+        $this->attributes['slug'] = str_slug($value);
+    }
 
     /**
      * The ideas that belong to the category.

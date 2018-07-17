@@ -17,8 +17,9 @@ class CreateIdeasTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('slug');
-            $table->text('description');
+            $table->text('description')->nullable()->default(null);
             $table->integer('app_type_id')->unsigned()->nullable();
+            $table->boolean('visible')->default(true);
             $table->timestamps();
             $table->softDeletes();
 

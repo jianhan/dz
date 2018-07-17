@@ -17,7 +17,7 @@ class CreateAppTypesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('slug');
-            $table->text('description');
+            $table->text('description')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
 
