@@ -24,6 +24,17 @@ class AppType extends Model
     ];
 
     /**
+     * Automatically set slug.
+     *
+     * @param $value
+     */
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = $value;
+        $this->attributes['slug'] = str_slug($value);
+    }
+
+    /**
      * Get the ideas for the app type.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

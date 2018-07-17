@@ -24,6 +24,17 @@ class Idea extends Model
     ];
 
     /**
+     * Automatically set slug.
+     *
+     * @param $value
+     */
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = $value;
+        $this->attributes['slug'] = str_slug($value);
+    }
+
+    /**
      * Get all of the idea's ratings.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
