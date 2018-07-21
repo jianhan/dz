@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\ElasticIndexes\CategoryIndexConfigurator;
+use App\ElasticSearchRules\CategorySearchRule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use ScoutElastic\Searchable;
@@ -40,7 +41,7 @@ class Category extends Model
     protected $indexConfigurator = CategoryIndexConfigurator::class;
 
     protected $searchRules = [
-        //
+        CategorySearchRule::class
     ];
 
     // Here you can specify a mapping for a model fields.

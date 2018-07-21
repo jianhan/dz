@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\APIv1;
 
+use App\ElasticSearchRules\CategorySearchRule;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -13,9 +14,10 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return [];
+        $c = Category::search('Newspap')->rule(CategorySearchRule::class)->get();
+        dd($c);
     }
 
     /**
