@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\ElasticIndexes\CategoryIndexConfigurator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use ScoutElastic\Searchable;
+
 
 /**
  * Class Category is the model for category.
@@ -12,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Category extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Searchable;
 
     /**
      * The attributes guarded.
@@ -33,6 +36,26 @@ class Category extends Model
         $this->attributes['name'] = $value;
         $this->attributes['slug'] = str_slug($value);
     }
+
+    protected $indexConfigurator = CategoryIndexConfigurator::class;
+
+    protected $searchRules = [
+        //
+    ];
+
+    // Here you can specify a mapping for a model fields.
+    protected $mapping = [
+        'properties' => [
+            'name' => [
+                'type' => 'text',
+                'fields' => [
+                    'raw' => [
+                        'type' => 'keyword',
+                    ]
+                ]
+            ],
+        ]
+    ];
 
     /**
      * The ideas that belong to the category.

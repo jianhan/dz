@@ -15,8 +15,6 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        echo 123;
-        exit;
         return [];
     }
 
@@ -28,7 +26,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-
+        return Category::create($request->all());
     }
 
     /**

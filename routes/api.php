@@ -17,7 +17,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+/*
+|--------------------------------------------------------------------------
+| Dingo API Routes
+|--------------------------------------------------------------------------
+|
+| Defines all dingo api routes
+|
+*/
 $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {
     $api->group(['prefix' => 'v1', 'namespace' => 'App\\Http\\Controllers\\APIv1'], function ($api) {

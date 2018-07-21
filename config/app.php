@@ -174,6 +174,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         \Torann\GeoIP\GeoIPServiceProvider::class,
         // the driver for Elasticsearch
+        Laravel\Scout\ScoutServiceProvider::class,
         ScoutElastic\ScoutElasticServiceProvider::class,
     ],
 
