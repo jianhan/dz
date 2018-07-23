@@ -24,6 +24,21 @@ class Idea extends Model
     ];
 
     /**
+     * Get mutator to ensure return blank string when it is null.
+     *
+     * @param $value Value of description.
+     * @return string  Return value of description..
+     */
+    public function getDescriptionAttribute($value)
+    {
+        if (is_null($value)) {
+            return '';
+        }
+
+        return $value;
+    }
+
+    /**
      * Automatically set slug.
      *
      * @param $value

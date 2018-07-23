@@ -7,6 +7,7 @@ use App\ElasticSearchRules\CategorySearchRule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use ScoutElastic\Searchable;
+use function is_null;
 
 
 /**
@@ -26,6 +27,21 @@ class Category extends Model
     protected $guarded = [
         'id'
     ];
+
+    /**
+     * Get mutator to ensure return blank string when it is null.
+     *
+     * @param $value Value of description.
+     * @return string  Return value of description..
+     */
+    public function getDescriptionAttribute($value)
+    {
+        if (is_null($value)) {
+            return '';
+        }
+
+        return $value;
+    }
 
     /**
      * Automatically set slug.

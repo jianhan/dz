@@ -103,6 +103,7 @@ class CategoriesTableSeeder extends Seeder
         ];
 
         foreach ($categories as $category) {
+//            $category['description'] = $category['name'];
             Category::create($category);
         }
     }
