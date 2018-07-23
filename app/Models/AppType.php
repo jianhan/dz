@@ -41,6 +41,6 @@ class AppType extends Model
      */
     public function ideas()
     {
-        return $this->hasMany('App\Model\Idea');
+        return $this->hasMany('App\Models\Idea');
     }
 }

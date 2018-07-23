@@ -51,7 +51,7 @@ class Idea extends Model
      */
     public function categories()
     {
-        return $this->belongsToMany('App\Model\Category');
+        return $this->belongsToMany('App\Models\Category');
     }
 
     /**

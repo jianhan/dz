@@ -65,6 +65,6 @@ class Category extends Model
      */
     public function ideas()
     {
-        return $this->belongsToMany('App\Model\Idea');
+        return $this->belongsToMany('App\Models\Idea');
     }
 }
