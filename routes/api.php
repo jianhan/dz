@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\APIResponseContentType;
+use App\Http\Middleware\APIVersion;
 use Illuminate\Http\Request;
 
 /*

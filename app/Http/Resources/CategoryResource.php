@@ -24,6 +24,9 @@ class CategoryResource extends JsonResource
                 'slug' => $this->slug,
                 'sort_order' => $this->sort_order,
             ],
+            'links' => [
+                'self' => route('categories.show', ['category' => $this->id]),
+            ],
         ];
     }
 }
