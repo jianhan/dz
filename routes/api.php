@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\APIResponseContentType;
 use Illuminate\Http\Request;
 
 /*
@@ -27,7 +28,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 */
 $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {
-    $api->group(['middleware' => 'bindings', 'prefix' => 'v1', 'namespace' => 'App\\Http\\Controllers\\APIv1'],
+    $api->group([
+        'middleware' => ['bindings'],
+        'prefix' => 'v1',
+        'namespace' => 'App\\Http\\Controllers\\APIv1'
+    ],
         function ($api) {
             $api->resource('categories', 'CategoryController');
         });

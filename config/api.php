@@ -215,8 +215,8 @@ return [
     'defaultFormat' => env('API_DEFAULT_FORMAT', 'json'),
 
     'formats' => [
-
-        'json' => Dingo\Api\Http\Response\Format\Json::class,
+//        'json' => Dingo\Api\Http\Response\Format\Json::class,
+        'json' => App\Http\Response\Formatter::class,
 
     ],
 
