@@ -18,8 +18,12 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = Category::search('News')->rule(CategorySearchRule::class)->get();
-        return new CategoryCollection($categories);
+        $categoryQuery = Category::query();
+        if ($request->get('query', false)) {
+            $categoryQuery = Category::search($request->get('query'))->rule(CategorySearchRule::class);
+        }
+
+        return new CategoryCollection($categoryQuery->paginate());
     }
 
     /**

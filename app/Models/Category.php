@@ -29,6 +29,43 @@ class Category extends Model
     ];
 
     /**
+     * Setup eager loading relationships.
+     *
+     * @var array
+     */
+    protected $with = ['ideas'];
+
+    /**
+     * Setup elastic search index configuration class.
+     *
+     * @var string
+     */
+    protected $indexConfigurator = CategoryIndexConfigurator::class;
+
+    /**
+     * Setup elastic search rules class.
+     *
+     * @var array
+     */
+    protected $searchRules = [
+        CategorySearchRule::class
+    ];
+
+    // Here you can specify a mapping for a model fields.
+    protected $mapping = [
+        'properties' => [
+            'name' => [
+                'type' => 'text',
+                'fields' => [
+                    'raw' => [
+                        'type' => 'keyword',
+                    ]
+                ]
+            ],
+        ]
+    ];
+
+    /**
      * Get mutator to ensure return blank string when it is null.
      *
      * @param $value Value of description.
@@ -54,25 +91,6 @@ class Category extends Model
         $this->attributes['slug'] = str_slug($value);
     }
 
-    protected $indexConfigurator = CategoryIndexConfigurator::class;
-
-    protected $searchRules = [
-        CategorySearchRule::class
-    ];
-
-    // Here you can specify a mapping for a model fields.
-    protected $mapping = [
-        'properties' => [
-            'name' => [
-                'type' => 'text',
-                'fields' => [
-                    'raw' => [
-                        'type' => 'keyword',
-                    ]
-                ]
-            ],
-        ]
-    ];
 
     /**
      * The ideas that belong to the category.
