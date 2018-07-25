@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\FractalServiceProvider;
+
 return [
 
     /*
