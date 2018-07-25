@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\APIv1;
 
 use App\ElasticSearchRules\CategorySearchRule;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\CategoryCollection;
+use App\Http\Controllers\APIController;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Transformers\CategoryTransformer;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class CategoryController extends APIController
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +23,7 @@ class CategoryController extends Controller
             $categoryQuery = Category::search($request->get('query'))->rule(CategorySearchRule::class);
         }
 
-        return new CategoryCollection($categoryQuery->paginate());
+        return $this->response->paginator($categoryQuery->paginate(), new CategoryTransformer);
     }
 
     /**
