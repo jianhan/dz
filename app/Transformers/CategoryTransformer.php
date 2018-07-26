@@ -18,6 +18,12 @@ class CategoryTransformer extends Fractal\TransformerAbstract
     ];
 
 
+    /**
+     * Transform defines how data should be presented.
+     *
+     * @param Category $category
+     * @return array
+     */
     public function transform(Category $category)
     {
         return [
@@ -31,6 +37,6 @@ class CategoryTransformer extends Fractal\TransformerAbstract
 
     public function includeIdeas(Category $category)
     {
-        return $this->collection($category->ideas, new IdeaTransformer);
+        return $this->collection($category->ideas, new IdeaTransformer, 'ideas');
     }
 }

@@ -4,13 +4,27 @@ namespace App\Http\Controllers\APIv1;
 
 use App\ElasticSearchRules\CategorySearchRule;
 use App\Http\Controllers\APIController;
-use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Transformers\CategoryTransformer;
+use Fractal;
 use Illuminate\Http\Request;
+use League\Fractal\Manager;
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
+use League\Fractal\Serializer\JsonApiSerializer;
 
 class CategoryController extends APIController
 {
+
+    /**
+     * @var categoryTransformer
+     */
+    private $categoryTransformer;
+
+    function __construct(Manager $fractal, CategoryTransformer $categoryTransformer)
+    {
+        $this->categoryTransformer = $categoryTransformer;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +37,12 @@ class CategoryController extends APIController
             $categoryQuery = Category::search($request->get('query'))->rule(CategorySearchRule::class);
         }
 
-        return $this->response->paginator($categoryQuery->paginate(), new CategoryTransformer);
+        $paginator = $categoryQuery->paginate();
+        return Fractal::create()
+            ->collection($paginator->getCollection(), new CategoryTransformer, 'categories')
+            ->serializeWith(new JsonApiSerializer)
+            ->paginateWith(new IlluminatePaginatorAdapter($paginator))
+            ->toArray();
     }
 
     /**

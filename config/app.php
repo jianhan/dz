@@ -178,6 +178,7 @@ return [
         // the driver for Elasticsearch
         Laravel\Scout\ScoutServiceProvider::class,
         ScoutElastic\ScoutElasticServiceProvider::class,
+        FractalServiceProvider::class,
     ],
 
     /*
