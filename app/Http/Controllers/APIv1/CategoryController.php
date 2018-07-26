@@ -8,22 +8,11 @@ use App\Models\Category;
 use App\Transformers\CategoryTransformer;
 use Fractal;
 use Illuminate\Http\Request;
-use League\Fractal\Manager;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Serializer\JsonApiSerializer;
 
 class CategoryController extends APIController
 {
-
-    /**
-     * @var categoryTransformer
-     */
-    private $categoryTransformer;
-
-    function __construct(Manager $fractal, CategoryTransformer $categoryTransformer)
-    {
-        $this->categoryTransformer = $categoryTransformer;
-    }
 
     /**
      * Display a listing of the resource.
