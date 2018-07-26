@@ -6,10 +6,13 @@ use App\ElasticSearchRules\CategorySearchRule;
 use App\Http\Controllers\APIController;
 use App\Models\Category;
 use App\Transformers\CategoryTransformer;
+use Dingo\Api\Exception\ValidationHttpException;
 use Fractal;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Serializer\JsonApiSerializer;
+use Validator;
 
 class CategoryController extends APIController
 {
@@ -25,8 +28,8 @@ class CategoryController extends APIController
         if ($request->get('query', false)) {
             $categoryQuery = Category::search($request->get('query'))->rule(CategorySearchRule::class);
         }
-
         $paginator = $categoryQuery->paginate();
+
         return Fractal::create()
             ->collection($paginator->getCollection(), new CategoryTransformer, 'categories')
             ->serializeWith(new JsonApiSerializer)
@@ -53,7 +56,7 @@ class CategoryController extends APIController
      */
     public function show(Category $category)
     {
-        return new CategoryResource($category);
+        return Fractal::create($category, new CategoryTransformer);
     }
 
     /**
@@ -65,7 +68,27 @@ class CategoryController extends APIController
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request['slug'] = $request->get('slug', '') == '' ? str_slug($request->name, '-') : str_slug($request->slug,
+            '-');
+        $validator = Validator::make($request->all(), [
+            'name' => [
+                'required',
+                Rule::unique('categories')->ignore($category->id),
+            ],
+            'slug' => [
+                'required',
+                Rule::unique('categories')->ignore($category->id),
+            ],
+            'description' => [
+                'required',
+            ]
+        ]);
+        if ($validator->fails()) {
+            throw new ValidationHttpException($validator->errors());
+        }
+        $category->update($validator->validate());
+
+        return Fractal::create($category, new CategoryTransformer);
     }
 
     /**
