@@ -45,6 +45,25 @@ class CategoryController extends APIController
      */
     public function store(Request $request)
     {
+        $request['slug'] = $request->get('slug', '') == '' ? str_slug($request->name, '-') : str_slug($request->slug,
+            '-');
+        $validator = Validator::make($request->all(), [
+            'name' => [
+                'required',
+                Rule::unique(Category::getModel()->getTable()),
+            ],
+            'slug' => [
+                'required',
+                Rule::unique(Category::getModel()->getTable()),
+            ],
+            'description' => [
+                'required',
+            ]
+        ]);
+        if ($validator->fails()) {
+            throw new ValidationHttpException($validator->errors());
+        }
+
         return Category::create($request->all());
     }
 
@@ -68,16 +87,17 @@ class CategoryController extends APIController
      */
     public function update(Request $request, Category $category)
     {
+
         $request['slug'] = $request->get('slug', '') == '' ? str_slug($request->name, '-') : str_slug($request->slug,
             '-');
         $validator = Validator::make($request->all(), [
             'name' => [
                 'required',
-                Rule::unique('categories')->ignore($category->id),
+                Rule::unique(Category::getModel()->getTable())->ignore($category->id),
             ],
             'slug' => [
                 'required',
-                Rule::unique('categories')->ignore($category->id),
+                Rule::unique(Category::getModel()->getTable())->ignore($category->id),
             ],
             'description' => [
                 'required',

@@ -36,5 +36,7 @@ $api->version('v1', function ($api) {
     ],
         function ($api) {
             $api->resource('categories', 'CategoryController');
+
+            $api->resource('categories.ideas', 'CategoryIdeaController');
         });
 });
