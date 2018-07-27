@@ -24,11 +24,11 @@ class CategoryController extends APIController
      */
     public function index(Request $request)
     {
-        $categoryQuery = Category::query();
+        $query = Category::query();
         if ($request->get('query', false)) {
-            $categoryQuery = Category::search($request->get('query'))->rule(CategorySearchRule::class);
+            $query = Category::search($request->get('query'))->rule(CategorySearchRule::class);
         }
-        $paginator = $categoryQuery->paginate();
+        $paginator = $query->paginate();
 
         return Fractal::create()
             ->collection($paginator->getCollection(), new CategoryTransformer, 'categories')
