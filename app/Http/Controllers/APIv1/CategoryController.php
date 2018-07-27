@@ -99,6 +99,12 @@ class CategoryController extends APIController
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return response()->json([
+            'meta' => [
+                'message' => 'Category deleted',
+                'status_code' => 200
+            ]
+        ]);
     }
 }
