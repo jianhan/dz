@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\APIv1;
 
 use App\Http\Controllers\APIController;
+use App\Http\Requests\CategoryDetachIdeas;
 use App\Http\Requests\StoreIdea;
 use App\Http\Requests\UpdateIdea;
 use App\Models\Category;
@@ -80,6 +81,42 @@ class CategoryIdeaController extends APIController
         return response()->json([
             'meta' => [
                 'message' => 'Idea has been detached from category',
+                'status_code' => 200
+            ]
+        ]);
+    }
+
+    /**
+     * detach detaches ideas from category.
+     *
+     * @param Category $category
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function detach(Category $category, CategoryDetachIdeas $request)
+    {
+        $category->ideas()->detach($request->validated()['ids']);
+
+        return response()->json([
+            'meta' => [
+                'message' => 'Ideas has been detached',
+                'status_code' => 200
+            ]
+        ]);
+    }
+
+    /**
+     * detachAll detaches all ideas from an give category.
+     *
+     * @param Category $category
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function detachAll(Category $category)
+    {
+        $category->ideas()->detach();
+
+        return response()->json([
+            'meta' => [
+                'message' => 'All ideas has been detached',
                 'status_code' => 200
             ]
         ]);

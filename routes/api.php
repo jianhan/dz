@@ -36,7 +36,10 @@ $api->version('v1', function ($api) {
     ],
         function ($api) {
             $api->resource('categories', 'CategoryController');
-
+            $api->delete('categories/{category}/ideas/detach',
+                'CategoryIdeaController@detach')->name('categories.ideas.detach');
+            $api->delete('categories/{category}/ideas/sync',
+                'CategoryIdeaController@sync')->name('categories.ideas.sync');
             $api->resource('categories.ideas', 'CategoryIdeaController');
         });
 });
