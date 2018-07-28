@@ -20,6 +20,7 @@ class CategoryIdeaController extends APIController
     public function index(Request $request, Category $category)
     {
         $paginator = $category->ideas()->paginate();
+
         return Fractal::create()
             ->collection($paginator->getCollection(), new IdeaTransformer(), 'ideas')
             ->serializeWith(new JsonApiSerializer)
@@ -33,7 +34,7 @@ class CategoryIdeaController extends APIController
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Category $category)
     {
         //
     }

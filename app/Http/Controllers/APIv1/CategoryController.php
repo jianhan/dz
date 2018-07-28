@@ -4,15 +4,14 @@ namespace App\Http\Controllers\APIv1;
 
 use App\ElasticSearchRules\CategorySearchRule;
 use App\Http\Controllers\APIController;
+use App\Http\Requests\StoreCategory;
+use App\Http\Requests\UpdateCategory;
 use App\Models\Category;
 use App\Transformers\CategoryTransformer;
-use Dingo\Api\Exception\ValidationHttpException;
 use Fractal;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Serializer\JsonApiSerializer;
-use Validator;
 
 class CategoryController extends APIController
 {
@@ -43,28 +42,9 @@ class CategoryController extends APIController
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategory $request)
     {
-        $request['slug'] = $request->get('slug', '') == '' ? str_slug($request->name, '-') : str_slug($request->slug,
-            '-');
-        $validator = Validator::make($request->all(), [
-            'name' => [
-                'required',
-                Rule::unique(Category::getModel()->getTable()),
-            ],
-            'slug' => [
-                'required',
-                Rule::unique(Category::getModel()->getTable()),
-            ],
-            'description' => [
-                'required',
-            ]
-        ]);
-        if ($validator->fails()) {
-            throw new ValidationHttpException($validator->errors());
-        }
-
-        return Category::create($request->all());
+        return Category::create($request->validated());
     }
 
     /**
@@ -85,28 +65,9 @@ class CategoryController extends APIController
      * @param  \App\Models\Category $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategory $request, Category $category)
     {
-
-        $request['slug'] = $request->get('slug', '') == '' ? str_slug($request->name, '-') : str_slug($request->slug,
-            '-');
-        $validator = Validator::make($request->all(), [
-            'name' => [
-                'required',
-                Rule::unique(Category::getModel()->getTable())->ignore($category->id),
-            ],
-            'slug' => [
-                'required',
-                Rule::unique(Category::getModel()->getTable())->ignore($category->id),
-            ],
-            'description' => [
-                'required',
-            ]
-        ]);
-        if ($validator->fails()) {
-            throw new ValidationHttpException($validator->errors());
-        }
-        $category->update($validator->validate());
+        $category->update($request->validated());
 
         return Fractal::create($category, new CategoryTransformer);
     }
