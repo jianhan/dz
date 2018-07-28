@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\APIv1;
 
 use App\Http\Controllers\APIController;
+use App\Http\Requests\StoreIdea;
+use App\Http\Requests\UpdateIdea;
 use App\Models\Category;
+use App\Models\Idea;
 use App\Transformers\IdeaTransformer;
 use Fractal;
 use Illuminate\Http\Request;
@@ -34,9 +37,9 @@ class CategoryIdeaController extends APIController
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Category $category)
+    public function store(StoreIdea $request, Category $category)
     {
-        //
+        return Fractal::create($category->ideas()->create($request->validated()), new IdeaTransformer);
     }
 
     /**
@@ -45,9 +48,9 @@ class CategoryIdeaController extends APIController
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Category $category, Idea $idea)
     {
-        //
+        return Fractal::create($idea, new IdeaTransformer);
     }
 
     /**
@@ -57,9 +60,11 @@ class CategoryIdeaController extends APIController
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Category $category, UpdateIdea $request, Idea $idea)
     {
-        //
+        $idea->update($request->validated());
+
+        return Fractal::create($idea, new IdeaTransformer);
     }
 
     /**
@@ -68,8 +73,15 @@ class CategoryIdeaController extends APIController
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category, Idea $idea)
     {
-        //
+        $category->ideas()->detach([$idea->id]);
+
+        return response()->json([
+            'meta' => [
+                'message' => 'Idea has been detached from category',
+                'status_code' => 200
+            ]
+        ]);
     }
 }

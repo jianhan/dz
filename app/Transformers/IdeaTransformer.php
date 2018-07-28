@@ -13,6 +13,7 @@ class IdeaTransformer extends Fractal\TransformerAbstract
             'id' => $idea->id,
             'name' => $idea->name,
             'slug' => $idea->slug,
+            'visible' => $idea->visible,
             'description' => $idea->description,
         ];
     }

@@ -44,7 +44,7 @@ class CategoryController extends APIController
      */
     public function store(StoreCategory $request)
     {
-        return Category::create($request->validated());
+        return Fractal::create(Category::create($request->validated()), new CategoryTransformer);
     }
 
     /**
@@ -81,6 +81,7 @@ class CategoryController extends APIController
     public function destroy(Category $category)
     {
         $category->delete();
+
         return response()->json([
             'meta' => [
                 'message' => 'Category deleted',
