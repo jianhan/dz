@@ -43,7 +43,7 @@ $api->version('v1', function ($api) {
                 'CategoryIdeaController@detachAll')->name('categories.ideas.detach-all');
             $api->post('categories/{category}/ideas/sync',
                 'CategoryIdeaController@sync')->name('categories.ideas.sync');
-            $api->resource('categories.ideas', 'CategoryIdeaController');
+            $api->resource('categories.ideas', 'CategoryIdeaController')->excep(['destroy']);
         });
 });
 

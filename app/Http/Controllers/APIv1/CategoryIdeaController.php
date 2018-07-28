@@ -70,24 +70,6 @@ class CategoryIdeaController extends APIController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Category $category, Idea $idea)
-    {
-        $category->ideas()->detach([$idea->id]);
-
-        return response()->json([
-            'meta' => [
-                'message' => 'Idea has been detached from category',
-                'status_code' => 200
-            ]
-        ]);
-    }
-
-    /**
      * detach detaches ideas from category.
      *
      * @param Category $category
@@ -123,6 +105,13 @@ class CategoryIdeaController extends APIController
         ]);
     }
 
+    /**
+     * sync synchronizes ideas to category.
+     *
+     * @param Category $category
+     * @param CategorySyncIdeas $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function sync(Category $category, CategorySyncIdeas $request)
     {
         $category->ideas()->sync($request->validated()['ids']);
