@@ -4,6 +4,7 @@ namespace App\Http\Controllers\APIv1;
 
 use App\Http\Controllers\APIController;
 use App\Http\Requests\CategoryDetachIdeas;
+use App\Http\Requests\CategorySyncIdeas;
 use App\Http\Requests\StoreIdea;
 use App\Http\Requests\UpdateIdea;
 use App\Models\Category;
@@ -117,6 +118,18 @@ class CategoryIdeaController extends APIController
         return response()->json([
             'meta' => [
                 'message' => 'All ideas has been detached',
+                'status_code' => 200
+            ]
+        ]);
+    }
+
+    public function sync(Category $category, CategorySyncIdeas $request)
+    {
+        $category->ideas()->sync($request->validated()['ids']);
+
+        return response()->json([
+            'meta' => [
+                'message' => 'Ideas has been synced',
                 'status_code' => 200
             ]
         ]);

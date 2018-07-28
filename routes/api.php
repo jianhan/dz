@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\APIResponseContentType;
 use App\Http\Middleware\APIVersion;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 /*
@@ -38,8 +39,24 @@ $api->version('v1', function ($api) {
             $api->resource('categories', 'CategoryController');
             $api->delete('categories/{category}/ideas/detach',
                 'CategoryIdeaController@detach')->name('categories.ideas.detach');
-            $api->delete('categories/{category}/ideas/sync',
+            $api->delete('categories/{category}/ideas/detach-all',
+                'CategoryIdeaController@detachAll')->name('categories.ideas.detach-all');
+            $api->post('categories/{category}/ideas/sync',
                 'CategoryIdeaController@sync')->name('categories.ideas.sync');
             $api->resource('categories.ideas', 'CategoryIdeaController');
         });
+});
+
+/*
+|--------------------------------------------------------------------------
+| Dingo API Exception customization
+|--------------------------------------------------------------------------
+|
+| Defines all dingo api exception handling
+|
+*/
+app('Dingo\Api\Exception\Handler')->register(function (
+    QueryException $exception
+) {
+    throw new Symfony\Component\HttpKernel\Exception\HttpException(500, "Unable to fulfill request");
 });
