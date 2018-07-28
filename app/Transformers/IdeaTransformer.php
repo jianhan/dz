@@ -7,6 +7,14 @@ use League\Fractal;
 
 class IdeaTransformer extends Fractal\TransformerAbstract
 {
+    /**
+     * List of resources possible to include
+     *
+     * @var array
+     */
+    protected $availableIncludes = [
+        'categories'
+    ];
 
     /**
      * List of resources to automatically include
@@ -20,7 +28,7 @@ class IdeaTransformer extends Fractal\TransformerAbstract
     public function transform(Idea $idea)
     {
         return [
-            'id' => $idea->id,
+            'id' => (int)$idea->id,
             'name' => $idea->name,
             'slug' => $idea->slug,
             'visible' => $idea->visible,
@@ -31,5 +39,10 @@ class IdeaTransformer extends Fractal\TransformerAbstract
     public function includeAppType(Idea $idea)
     {
         return $this->collection($idea->appType(), new AppTypeTransformer, 'appTypes');
+    }
+
+    public function includeCategories(Idea $idea)
+    {
+        return $this->collection($idea->categories, new CategoryTransformer, 'categories');
     }
 }

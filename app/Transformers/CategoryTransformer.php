@@ -9,11 +9,11 @@ class CategoryTransformer extends Fractal\TransformerAbstract
 {
 
     /**
-     * List of resources to automatically include
+     * List of resources possible to include.
      *
      * @var array
      */
-    protected $defaultIncludes = [
+    protected $availableIncludes = [
         'ideas'
     ];
 
@@ -27,7 +27,7 @@ class CategoryTransformer extends Fractal\TransformerAbstract
     public function transform(Category $category)
     {
         return [
-            'id' => $category->id,
+            'id' => (int)$category->id,
             'name' => $category->name,
             'slug' => $category->slug,
             'description' => $category->description,

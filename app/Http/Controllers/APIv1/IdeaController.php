@@ -25,6 +25,7 @@ class IdeaController extends APIController
             ->collection($paginator->getCollection(), new IdeaTransformer, 'ideas')
             ->serializeWith(new JsonApiSerializer)
             ->paginateWith(new IlluminatePaginatorAdapter($paginator))
+            ->parseIncludes(['categories'])
             ->toArray();
     }
 
