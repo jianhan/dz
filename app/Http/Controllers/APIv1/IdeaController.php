@@ -10,6 +10,7 @@ use App\Transformers\IdeaTransformer;
 use Fractal;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Serializer\JsonApiSerializer;
+use Spatie\Tags\Tag;
 
 class IdeaController extends APIController
 {
@@ -37,9 +38,20 @@ class IdeaController extends APIController
      */
     public function store(StoreIdea $request)
     {
-        $idea = Idea::create($request->except('categories'));
+        $idea = Idea::create($request->except(['categories']));
+
+        // sync categories if there are some
         if ($request->get('categories', false)) {
             $idea->categories()->sync($request->get('categories'));
+        }
+
+        // sync tags if there are some
+        if ($request->get('tags', false)) {
+            $tags = [];
+            foreach ($request->get('tags') as $tag) {
+                array_push($tags, Tag::findOrCreate($tag, 'ideasTag'));
+            }
+            $idea->attachTags($tags);
         }
 
         return Fractal::create($idea, new IdeaTransformer);

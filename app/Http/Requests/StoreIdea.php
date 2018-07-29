@@ -43,6 +43,9 @@ class StoreIdea extends FormRequest
             'categories' => [
                 'array',
             ],
+            'tags' => [
+                'array',
+            ],
             'description' => [
                 'required',
             ]
