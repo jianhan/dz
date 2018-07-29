@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\APIv1;
 
-use App\ElasticSearchRules\CategorySearchRule;
 use App\Http\Controllers\APIController;
 use App\Http\Requests\StoreCategory;
 use App\Http\Requests\UpdateCategory;
@@ -11,6 +10,7 @@ use App\Transformers\CategoryTransformer;
 use Fractal;
 use Illuminate\Http\Request;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
+use League\Fractal\ParamBag;
 use League\Fractal\Serializer\JsonApiSerializer;
 
 class CategoryController extends APIController
@@ -24,13 +24,14 @@ class CategoryController extends APIController
     public function index(Request $request)
     {
         $query = Category::query();
-        if ($request->get('query', false)) {
-            $query = Category::search($request->get('query'))->rule(CategorySearchRule::class);
-        }
+//        if ($request->get('query', false)) {
+//            $query = Category::search($request->get('query'))->rule(CategorySearchRule::class);
+//        }
         $paginator = $query->paginate();
 
         return Fractal::create()
-            ->collection($paginator->getCollection(), new CategoryTransformer, 'categories')
+            ->collection($paginator->getCollection(), new CategoryTransformer(new ParamBag($request->all())),
+                'categories')
             ->parseIncludes(['ideas'])
             ->serializeWith(new JsonApiSerializer)
             ->paginateWith(new IlluminatePaginatorAdapter($paginator))

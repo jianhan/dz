@@ -8,6 +8,8 @@ use League\Fractal;
 class CategoryTransformer extends Fractal\TransformerAbstract
 {
 
+    private $ideasParams = ['limit', 'order'];
+
     /**
      * List of resources possible to include.
      *
@@ -35,8 +37,32 @@ class CategoryTransformer extends Fractal\TransformerAbstract
         ];
     }
 
-    public function includeIdeas(Category $category)
+    public function includeIdeas(Category $category, Fractal\ParamBag $params = null)
     {
-        return $this->collection($category->ideas, new IdeaTransformer, 'ideas');
+        if ($params === null) {
+            return $this->collection($category->ideas, new IdeaTransformer, 'ideas');
+        }
+
+        // Optional params validation
+        $paramsArray = array_keys(iterator_to_array($params));
+        if ($invalidParams = array_diff($paramsArray, $this->ideasParams)) {
+            throw new \Exception(sprintf(
+                'Invalid param(s): "%s". Valid param(s): "%s"',
+                implode(',', $paramsArray),
+                implode(',', $this->ideasParams)
+            ));
+        }
+
+        // Processing
+        list($limit, $offset) = $params->get('limit');
+        list($orderCol, $orderBy) = $params->get('order');
+
+        $ideas = $category->ideas()
+            ->take($limit)
+            ->skip($offset)
+            ->orderBy($orderCol, $orderBy)
+            ->get();
+
+        return $this->collection($ideas, new IdeaTransformer, 'ideas');
     }
 }
