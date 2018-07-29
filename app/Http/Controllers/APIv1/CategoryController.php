@@ -32,7 +32,6 @@ class CategoryController extends APIController
         return Fractal::create()
             ->collection($paginator->getCollection(), new CategoryTransformer(new ParamBag($request->all())),
                 'categories')
-            ->parseIncludes(['ideas'])
             ->serializeWith(new JsonApiSerializer)
             ->paginateWith(new IlluminatePaginatorAdapter($paginator))
             ->toArray();

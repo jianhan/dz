@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\APIv1;
 
 use App\Http\Controllers\APIController;
+use App\Http\Requests\StoreIdea;
 use App\Models\Idea;
 use App\Transformers\IdeaTransformer;
 use Fractal;
@@ -25,7 +26,6 @@ class IdeaController extends APIController
             ->collection($paginator->getCollection(), new IdeaTransformer, 'ideas')
             ->serializeWith(new JsonApiSerializer)
             ->paginateWith(new IlluminatePaginatorAdapter($paginator))
-            ->parseIncludes(['categories'])
             ->toArray();
     }
 
@@ -35,9 +35,14 @@ class IdeaController extends APIController
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreIdea $request)
     {
-        //
+        $idea = Idea::create($request->except('categories'));
+        if ($request->get('categories', false)) {
+            $idea->categories()->sync($request->get('categories'));
+        }
+
+        return Fractal::create($idea, new IdeaTransformer);
     }
 
     /**
@@ -46,9 +51,9 @@ class IdeaController extends APIController
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Idea $idea)
     {
-        //
+        return Fractal::create($idea, new IdeaTransformer);
     }
 
     /**
@@ -60,7 +65,7 @@ class IdeaController extends APIController
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
