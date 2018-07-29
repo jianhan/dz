@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Tags\HasTags;
 
 /**
  * Class Idea is the model for idea.
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Idea extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasTags;
 
     /**
      * The attributes guarded.

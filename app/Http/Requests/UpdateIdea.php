@@ -40,6 +40,10 @@ class UpdateIdea extends FormRequest
             'visible' => [
                 'required',
             ],
+            'categories' => [
+                'array',
+            ],
+            'categories_option' => Rule::in(['sync', 'add', 'detach']),
             'description' => [
                 'required',
             ]

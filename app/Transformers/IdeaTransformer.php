@@ -23,7 +23,8 @@ class IdeaTransformer extends Fractal\TransformerAbstract
      * @var array
      */
     protected $defaultIncludes = [
-        'appType'
+        'appType',
+        'tags'
     ];
 
     public function transform(Idea $idea)
@@ -46,4 +47,10 @@ class IdeaTransformer extends Fractal\TransformerAbstract
     {
         return $this->collection($idea->categories, new CategoryTransformer, 'categories');
     }
+
+    public function includeTags(Idea $idea)
+    {
+        return $this->collection($idea->tags, new TagTransformer(), 'tags');
+    }
 }
+

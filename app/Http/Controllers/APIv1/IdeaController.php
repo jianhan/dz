@@ -4,10 +4,10 @@ namespace App\Http\Controllers\APIv1;
 
 use App\Http\Controllers\APIController;
 use App\Http\Requests\StoreIdea;
+use App\Http\Requests\UpdateIdea;
 use App\Models\Idea;
 use App\Transformers\IdeaTransformer;
 use Fractal;
-use Illuminate\Http\Request;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Serializer\JsonApiSerializer;
 
@@ -63,9 +63,24 @@ class IdeaController extends APIController
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateIdea $request, Idea $idea)
     {
+        if ($request->get('categories', false) && $request->get('categories_option', false)) {
+            switch ($request->get('categories_option')) {
+                case 'sync':
+                    $idea->categories()->sync($request->get('categories'));
+                case 'detach':
+                    $idea->categories()->detach($request->get('categories'));
+                case 'add':
+                    $idea->categories()->attach($request->get('categories'));
+            }
+        }
+        $idea->update($request->except(['categories', 'categories_option']));
 
+        return Fractal::create()
+            ->item($idea, new IdeaTransformer, 'ideas')
+            ->serializeWith(new JsonApiSerializer)
+            ->toArray();
     }
 
     /**

@@ -40,6 +40,9 @@ class StoreIdea extends FormRequest
             'visible' => [
                 'required',
             ],
+            'categories' => [
+                'array',
+            ],
             'description' => [
                 'required',
             ]
