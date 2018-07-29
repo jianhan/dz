@@ -38,7 +38,7 @@ class CategoryTransformer extends Fractal\TransformerAbstract
 
     public function includeIdeas(Category $category, Fractal\ParamBag $params = null)
     {
-        if ($params === null) {
+        if ($params === null || $params->getIterator()->count() == 0) {
             return $this->collection($category->ideas, new IdeaTransformer, 'ideas');
         }
 
