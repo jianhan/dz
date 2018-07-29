@@ -3,13 +3,12 @@
 namespace App\Transformers;
 
 use App\Models\Category;
+use App\Traits\FractalParamBagValidator;
 use League\Fractal;
 
 class CategoryTransformer extends Fractal\TransformerAbstract
 {
-
-    private $ideasParams = ['limit', 'order'];
-
+    use FractalParamBagValidator;
     /**
      * List of resources possible to include.
      *
@@ -43,15 +42,8 @@ class CategoryTransformer extends Fractal\TransformerAbstract
             return $this->collection($category->ideas, new IdeaTransformer, 'ideas');
         }
 
-        // Optional params validation
-        $paramsArray = array_keys(iterator_to_array($params));
-        if ($invalidParams = array_diff($paramsArray, $this->ideasParams)) {
-            throw new \Exception(sprintf(
-                'Invalid param(s): "%s". Valid param(s): "%s"',
-                implode(',', $paramsArray),
-                implode(',', $this->ideasParams)
-            ));
-        }
+        // validation
+        $this->validateParamBag($params, ['limit', 'order']);
 
         // Processing
         list($limit, $offset) = $params->get('limit');
