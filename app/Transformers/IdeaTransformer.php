@@ -13,7 +13,8 @@ class IdeaTransformer extends Fractal\TransformerAbstract
      * @var array
      */
     protected $availableIncludes = [
-        'categories'
+        'categories',
+
     ];
 
     /**
@@ -38,7 +39,7 @@ class IdeaTransformer extends Fractal\TransformerAbstract
 
     public function includeAppType(Idea $idea)
     {
-        return $this->collection($idea->appType(), new AppTypeTransformer, 'appTypes');
+        return $idea->appType ? $this->item($idea->appType, new AppTypeTransformer, 'appTypes') : $this->null();
     }
 
     public function includeCategories(Idea $idea)
