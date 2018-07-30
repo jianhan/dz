@@ -127,8 +127,15 @@ class IdeaController extends APIController
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Idea $idea)
     {
-        //
+        $idea->delete();
+
+        return response()->json([
+            'meta' => [
+                'message' => 'Idea deleted',
+                'status_code' => 200
+            ]
+        ]);
     }
 }

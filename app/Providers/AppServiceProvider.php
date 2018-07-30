@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use App\Models\Idea;
 use App\Observers\CategoryObserver;
+use App\Observers\IdeaObserver;
 use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\ServiceProvider;
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
         Resource::withoutWrapping();
         ResourceCollection::withoutWrapping();
         Category::observe(CategoryObserver::class);
+        Idea::observe(IdeaObserver::class);
     }
 
     /**

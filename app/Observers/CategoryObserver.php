@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\MOdels\Category;
+use App\Models\Category;
 
 class CategoryObserver
 {
