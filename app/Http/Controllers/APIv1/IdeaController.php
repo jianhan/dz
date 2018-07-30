@@ -77,17 +77,43 @@ class IdeaController extends APIController
      */
     public function update(UpdateIdea $request, Idea $idea)
     {
+        // update categories
         if ($request->get('categories', false) && $request->get('categories_option', false)) {
-            switch ($request->get('categories_option')) {
+            $categoriesOption = $request->get('categories_option');
+            switch ($categoriesOption) {
                 case 'sync':
                     $idea->categories()->sync($request->get('categories'));
+                    break;
                 case 'detach':
                     $idea->categories()->detach($request->get('categories'));
+                    break;
                 case 'add':
                     $idea->categories()->attach($request->get('categories'));
+                    break;
             }
         }
-        $idea->update($request->except(['categories', 'categories_option']));
+
+        // update tags
+        if ($request->get('tags', false) && $request->get('tags_option', false)) {
+            $tags = [];
+            foreach ($request->get('tags') as $tag) {
+                array_push($tags, Tag::findOrCreate($tag, 'ideasTag'));
+            }
+            $tagsOption = $request->get('tags_option');
+            switch ($tagsOption) {
+                case 'sync':
+                    $idea->syncTags($tags);
+                    break;
+                case 'detach':
+                    $idea->detachTags($tags);
+                    break;
+                case 'add':
+                    $idea->attachTags($tags);
+                    break;
+            }
+        }
+
+        $idea->update($request->only(['name', 'slug', 'visible', 'description', 'app_type_id']));
 
         return Fractal::create()
             ->item($idea, new IdeaTransformer, 'ideas')
