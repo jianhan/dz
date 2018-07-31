@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\APIv1;
 
 use App\Http\Controllers\APIController;
-use App\Http\Requests\CategoryAttachIdeas;
 use App\Http\Requests\CategoryDetachIdeas;
 use App\Http\Requests\CategorySyncIdeas;
 use App\Models\Category;
@@ -32,6 +31,21 @@ class CategoryIdeaController extends APIController
             ->paginateWith(new IlluminatePaginatorAdapter($paginator))
             ->toArray();
     }
+
+    /**
+     * attach attaches ideas to category.
+     *
+     * @param Category $category
+     * @param CategoryAttachIdeas $request
+     * @return \Spatie\Fractalistic\Fractal
+     */
+    public function attach(Category $category, CategoryAttachIdeas $request)
+    {
+        $category->ideas()->attach($request->validated()['ids']);
+
+        return $this->fractalCategory($category);
+    }
+
 
     /**
      * detach detaches ideas from category.
@@ -70,21 +84,6 @@ class CategoryIdeaController extends APIController
     public function sync(Category $category, CategorySyncIdeas $request)
     {
         $category->ideas()->sync($request->validated()['ids']);
-
-        return $this->fractalCategory($category);
-    }
-
-
-    /**
-     * attach attaches ideas to category.
-     *
-     * @param Category $category
-     * @param CategoryAttachIdeas $request
-     * @return \Spatie\Fractalistic\Fractal
-     */
-    public function attach(Category $category, CategoryAttachIdeas $request)
-    {
-        $category->ideas()->attach($request->validated()['ids']);
 
         return $this->fractalCategory($category);
     }

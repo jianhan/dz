@@ -5,6 +5,8 @@ namespace App\Http\Controllers\APIv1;
 namespace App\Http\Controllers\APIv1;
 
 use App\Http\Controllers\APIController;
+use App\Http\Requests\IdeaAttachCategories;
+use App\Http\Requests\IdeaDetachCategories;
 use App\Http\Requests\IdeaSyncCategories;
 use App\Models\Idea;
 use App\Transformers\CategoryTransformer;
@@ -34,20 +36,70 @@ class IdeaCategoryController extends APIController
             ->toArray();
     }
 
+    /**
+     * attach attaches categories to ideas.
+     *
+     * @param Idea $idea
+     * @param IdeaAttachCategories $request
+     * @return \Spatie\Fractal\Fractal
+     */
+    public function attach(Idea $idea, IdeaAttachCategories $request)
+    {
+        $idea->categories()->attach($request->validated()['ids']);
+
+        return $this->fractalIdea($idea);
+    }
+
+    /**
+     * detach detaches categories from ideas.
+     *
+     * @param Idea $idea
+     * @param IdeaDetachCategories $request
+     * @return \Spatie\Fractal\Fractal
+     */
+    public function detach(Idea $idea, IdeaDetachCategories $request)
+    {
+        $idea->categories()->detach($request->validated()['ids']);
+
+        return $this->fractalIdea($idea);
+    }
+
+    /**
+     * detachAll detaches all categories from idea.
+     *
+     * @param Idea $idea
+     * @return \Spatie\Fractal\Fractal
+     */
+    public function detachAll(Idea $idea)
+    {
+        $idea->categories()->detach();
+
+        return $this->fractalIdea($idea);
+    }
+
+    /**
+     * sync syncs categories to idea.
+     *
+     * @param Idea $idea
+     * @param IdeaSyncCategories $request
+     * @return \Spatie\Fractal\Fractal
+     */
     public function sync(Idea $idea, IdeaSyncCategories $request)
     {
         $idea->categories()->sync($request->validated()['ids']);
 
-        return Fractal::create()
-            ->item($idea, new IdeaTransformer, 'ideas')
-            ->parseIncludes(['categories'])
-            ->serializeWith(new JsonApiSerializer)
-            ->toArray();
+        return $this->fractalIdea($idea);
     }
 
-    public function attach(Idea $idea, IdeaSyncCategories $request)
+    /**
+     * fractalIdea is a helper function returns a fractal in current context.
+     *
+     * @param Idea $idea
+     * @return \Spatie\Fractal\Fractal
+     */
+    private function fractalIdea(Idea $idea): \Spatie\Fractal\Fractal
     {
-        $idea->categories()->sync($request->validated()['ids']);
+        $idea->load('categories');
 
         return Fractal::create()
             ->item($idea, new IdeaTransformer, 'ideas')
