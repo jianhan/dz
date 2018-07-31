@@ -45,7 +45,7 @@ class IdeaCategoryController extends APIController
             ->toArray();
     }
 
-    public function add(Idea $idea, IdeaSyncCategories $request)
+    public function attach(Idea $idea, IdeaSyncCategories $request)
     {
         $idea->categories()->sync($request->validated()['ids']);
 

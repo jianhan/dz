@@ -43,11 +43,9 @@ class CategoryIdeaController extends APIController
     {
         $category->ideas()->detach($request->validated()['ids']);
 
-        return Fractal::create()
-            ->item($category, new CategoryTransformer, 'categories')
-            ->parseIncludes(['ideas'])
-            ->serializeWith(new JsonApiSerializer);
+        return $this->fractalCategory($category);
     }
+
 
     /**
      * detachAll detaches all ideas from an give category.
@@ -59,10 +57,7 @@ class CategoryIdeaController extends APIController
     {
         $category->ideas()->detach();
 
-        return Fractal::create()
-            ->item($category, new CategoryTransformer, 'categories')
-            ->parseIncludes(['ideas'])
-            ->serializeWith(new JsonApiSerializer);
+        return $this->fractalCategory($category);
     }
 
     /**
@@ -76,10 +71,7 @@ class CategoryIdeaController extends APIController
     {
         $category->ideas()->sync($request->validated()['ids']);
 
-        return Fractal::create()
-            ->item($category, new CategoryTransformer, 'categories')
-            ->parseIncludes(['ideas'])
-            ->serializeWith(new JsonApiSerializer);
+        return $this->fractalCategory($category);
     }
 
 
@@ -93,6 +85,18 @@ class CategoryIdeaController extends APIController
     public function attach(Category $category, CategoryAttachIdeas $request)
     {
         $category->ideas()->attach($request->validated()['ids']);
+
+        return $this->fractalCategory($category);
+    }
+
+    /**
+     * fractalCategory generates fractal for category within current category context.
+     *
+     * @param Category $category
+     * @return \Spatie\Fractal\Fractal
+     */
+    private function fractalCategory(Category $category): \Spatie\Fractal\Fractal
+    {
         $category->load('ideas');
 
         return Fractal::create()
