@@ -38,18 +38,21 @@ $api->version('v1', function ($api) {
         function ($api) {
             // Category related routes
             $api->resource('categories', 'CategoryController');
+
             $api->delete('categories/{category}/ideas/detach',
                 'CategoryIdeaController@detach')->name('categories.ideas.detach');
+            $api->post('categories/{category}/ideas/attach',
+                'CategoryIdeaController@attach')->name('categories.ideas.attach');
             $api->delete('categories/{category}/ideas/detach-all',
                 'CategoryIdeaController@detachAll')->name('categories.ideas.detach-all');
             $api->post('categories/{category}/ideas/sync',
                 'CategoryIdeaController@sync')->name('categories.ideas.sync');
-            $api->resource('categories.ideas', 'CategoryIdeaController', ['except' => ['destroy']]);
+            $api->resource('categories.ideas', 'CategoryIdeaController', ['only' => ['index']]);
 
             // Idea related routes
             $api->post('ideas/{idea}/categories/sync',
                 'IdeaCategoryController@sync')->name('ideas.categories.sync');
-            $api->resource('ideas.categories', 'IdeaCategoryController');
+            $api->resource('ideas.categories', 'IdeaCategoryController', ['only' => ['index']]);
             $api->resource('ideas', 'IdeaController');
 
         });

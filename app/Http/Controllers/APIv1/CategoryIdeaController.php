@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\APIv1;
 
 use App\Http\Controllers\APIController;
+use App\Http\Requests\CategoryAttachIdeas;
 use App\Http\Requests\CategoryDetachIdeas;
 use App\Http\Requests\CategorySyncIdeas;
-use App\Http\Requests\StoreIdea;
-use App\Http\Requests\UpdateIdea;
 use App\Models\Category;
-use App\Models\Idea;
+use App\Transformers\CategoryTransformer;
 use App\Transformers\IdeaTransformer;
 use Fractal;
 use Illuminate\Http\Request;
@@ -28,45 +27,10 @@ class CategoryIdeaController extends APIController
 
         return Fractal::create()
             ->collection($paginator->getCollection(), new IdeaTransformer(), 'ideas')
+            ->parseIncludes(['ideas'])
             ->serializeWith(new JsonApiSerializer)
             ->paginateWith(new IlluminatePaginatorAdapter($paginator))
             ->toArray();
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreIdea $request, Category $category)
-    {
-        return Fractal::create($category->ideas()->create($request->validated()), new IdeaTransformer);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category, Idea $idea)
-    {
-        return Fractal::create($idea, new IdeaTransformer);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Category $category, UpdateIdea $request, Idea $idea)
-    {
-        $idea->update($request->validated());
-
-        return Fractal::create($idea, new IdeaTransformer);
     }
 
     /**
@@ -79,12 +43,10 @@ class CategoryIdeaController extends APIController
     {
         $category->ideas()->detach($request->validated()['ids']);
 
-        return response()->json([
-            'meta' => [
-                'message' => 'Ideas has been detached',
-                'status_code' => 200
-            ]
-        ]);
+        return Fractal::create()
+            ->item($category, new CategoryTransformer, 'categories')
+            ->parseIncludes(['ideas'])
+            ->serializeWith(new JsonApiSerializer);
     }
 
     /**
@@ -97,12 +59,10 @@ class CategoryIdeaController extends APIController
     {
         $category->ideas()->detach();
 
-        return response()->json([
-            'meta' => [
-                'message' => 'All ideas has been detached',
-                'status_code' => 200
-            ]
-        ]);
+        return Fractal::create()
+            ->item($category, new CategoryTransformer, 'categories')
+            ->parseIncludes(['ideas'])
+            ->serializeWith(new JsonApiSerializer);
     }
 
     /**
@@ -116,11 +76,28 @@ class CategoryIdeaController extends APIController
     {
         $category->ideas()->sync($request->validated()['ids']);
 
-        return response()->json([
-            'meta' => [
-                'message' => 'Ideas has been synced',
-                'status_code' => 200
-            ]
-        ]);
+        return Fractal::create()
+            ->item($category, new CategoryTransformer, 'categories')
+            ->parseIncludes(['ideas'])
+            ->serializeWith(new JsonApiSerializer);
+    }
+
+
+    /**
+     * attach attaches ideas to category.
+     *
+     * @param Category $category
+     * @param CategoryAttachIdeas $request
+     * @return \Spatie\Fractalistic\Fractal
+     */
+    public function attach(Category $category, CategoryAttachIdeas $request)
+    {
+        $category->ideas()->attach($request->validated()['ids']);
+        $category->load('ideas');
+
+        return Fractal::create()
+            ->item($category, new CategoryTransformer, 'categories')
+            ->parseIncludes(['ideas'])
+            ->serializeWith(new JsonApiSerializer);
     }
 }

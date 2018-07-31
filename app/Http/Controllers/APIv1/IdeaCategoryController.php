@@ -44,4 +44,15 @@ class IdeaCategoryController extends APIController
             ->serializeWith(new JsonApiSerializer)
             ->toArray();
     }
+
+    public function add(Idea $idea, IdeaSyncCategories $request)
+    {
+        $idea->categories()->sync($request->validated()['ids']);
+
+        return Fractal::create()
+            ->item($idea, new IdeaTransformer, 'ideas')
+            ->parseIncludes(['categories'])
+            ->serializeWith(new JsonApiSerializer)
+            ->toArray();
+    }
 }
