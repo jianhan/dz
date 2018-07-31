@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Dingo\Api\Http\FormRequest;
 
-class CategorySyncIdeas extends FormRequest
+class IdeaSyncCategories extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

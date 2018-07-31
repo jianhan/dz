@@ -47,6 +47,9 @@ $api->version('v1', function ($api) {
             $api->resource('categories.ideas', 'CategoryIdeaController', ['except' => ['destroy']]);
 
             // Idea related routes
+            $api->post('ideas/{idea}/categories/sync',
+                'IdeaCategoryController@sync')->name('ideas.categories.sync');
+            $api->resource('ideas.categories', 'IdeaCategoryController');
             $api->resource('ideas', 'IdeaController');
 
         });
@@ -63,6 +66,5 @@ $api->version('v1', function ($api) {
 app('Dingo\Api\Exception\Handler')->register(function (
     QueryException $exception
 ) {
-    dd($exception);
     throw new Symfony\Component\HttpKernel\Exception\HttpException(500, "Unable to fulfill request");
 });
