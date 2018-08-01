@@ -13,5 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(AppTypesTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
+        $this->call(CountriesTableSeeder::class);
+        $this->call(StatesTableSeeder::class);
     }
 }
