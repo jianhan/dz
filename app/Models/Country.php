@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Country extends Model
 {
     use SoftDeletes;
+
+    /**
+     * ideas defines many to many relationship between idea and country.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function ideas()
+    {
+        return $this->belongsToMany('App\Models\Idea');
+    }
 }

@@ -79,4 +79,14 @@ class Idea extends Model
     {
         return $this->belongsTo('App\Models\AppType');
     }
+
+    /**
+     * Defines many to many relationship between idea and country.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function countries()
+    {
+        return $this->belongsToMany('App\Models\Country');
+    }
 }
