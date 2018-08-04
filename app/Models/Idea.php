@@ -16,6 +16,13 @@ class Idea extends Model
     use SoftDeletes, HasTags;
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['ratings', 'categories', 'appType', 'countries', 'occupations'];
+
+    /**
      * The attributes guarded.
      *
      * @var array
@@ -88,5 +95,15 @@ class Idea extends Model
     public function countries()
     {
         return $this->belongsToMany('App\Models\Country');
+    }
+
+    /**
+     * Defines many to many relationship between idea and occupation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function occupations()
+    {
+        return $this->belongsToMany('App\Models\Occupation');
     }
 }

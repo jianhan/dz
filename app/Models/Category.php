@@ -20,6 +20,13 @@ class Category extends Model
     use SoftDeletes, Searchable;
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['ideas'];
+
+    /**
      * The attributes guarded.
      *
      * @var array
@@ -27,13 +34,6 @@ class Category extends Model
     protected $guarded = [
         'id'
     ];
-
-    /**
-     * Setup eager loading relationships.
-     *
-     * @var array
-     */
-    protected $with = ['ideas'];
 
     /**
      * Setup elastic search index configuration class.
