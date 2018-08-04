@@ -30,4 +30,14 @@ class User extends Authenticatable
         'verified',
         'verification_token'
     ];
+
+    /**
+     * ideas defines has many relationship between user and ideas.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ideas()
+    {
+        return $this->hasMany('App\Models\User');
+    }
 }

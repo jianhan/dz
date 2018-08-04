@@ -22,6 +22,8 @@ class CreateIdeasTable extends Migration
             $table->integer('preferable_min_age');
             $table->integer('preferable_max_age');
             $table->boolean('visible')->default(true);
+            $table->integer('created_by')->unsigned();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
 

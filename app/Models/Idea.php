@@ -106,4 +106,15 @@ class Idea extends Model
     {
         return $this->belongsToMany('App\Models\Occupation');
     }
+
+    /**
+     * createdBy defines idea belongs to user relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function createdBy()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
 }
