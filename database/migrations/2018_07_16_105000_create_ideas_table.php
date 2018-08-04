@@ -19,6 +19,8 @@ class CreateIdeasTable extends Migration
             $table->string('slug');
             $table->text('description')->nullable()->default(null);
             $table->integer('app_type_id')->unsigned()->nullable();
+            $table->integer('preferable_min_age');
+            $table->integer('preferable_max_age');
             $table->boolean('visible')->default(true);
             $table->timestamps();
             $table->softDeletes();
