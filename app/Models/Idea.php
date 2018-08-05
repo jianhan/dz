@@ -20,7 +20,7 @@ class Idea extends Model
      *
      * @var array
      */
-    protected $with = ['ratings', 'categories', 'appType', 'countries', 'occupations'];
+    protected $with = ['appType'];
 
     /**
      * The attributes guarded.
@@ -117,4 +117,13 @@ class Idea extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    /**
+     * stories defines one to many relationship between idea and stories.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stories()
+    {
+        return $this->hasMany('App\Models\Story');
+    }
 }
