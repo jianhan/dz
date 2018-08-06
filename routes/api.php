@@ -61,6 +61,8 @@ $api->version('v1', function ($api) {
             $api->resource('ideas.categories', 'IdeaCategoryController', ['only' => ['index']]);
             $api->resource('ideas', 'IdeaController');
 
+            // Features
+            $api->resource('ideas.features', 'IdeaFeatureController');
         });
 });
 

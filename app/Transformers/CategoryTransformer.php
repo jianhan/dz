@@ -9,6 +9,7 @@ use League\Fractal;
 class CategoryTransformer extends Fractal\TransformerAbstract
 {
     use FractalParamBagValidator;
+
     /**
      * List of resources possible to include.
      *

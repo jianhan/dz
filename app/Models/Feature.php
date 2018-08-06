@@ -19,6 +19,36 @@ class Feature extends Model
     ];
 
     /**
+     * Mutator used to return empty string if value is null.
+     *
+     * @param $value
+     * @return string
+     */
+    public function getPriorityAttribute($value)
+    {
+        if (is_null($value)) {
+            return '';
+        }
+
+        return $value;
+    }
+
+    /**
+     * Mutator used to return empty string if value is null.
+     *
+     * @param $value
+     * @return string
+     */
+    public function getNotesAttribute($value)
+    {
+        if (is_null($value)) {
+            return '';
+        }
+
+        return $value;
+    }
+
+    /**
      * idea defines one to many relationship between features and idea.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
