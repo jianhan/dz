@@ -9,11 +9,6 @@ class Feature extends Model
 {
     use SoftDeletes;
 
-    public static $upsertValidationRules = [
-        'role' => 'required',
-        'task' => 'required',
-        'goal' => 'required',
-    ];
     /**
      * The attributes guarded.
      *

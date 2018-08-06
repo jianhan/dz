@@ -5,7 +5,6 @@ namespace App\Http\Controllers\APIv1;
 use App\Http\Controllers\APIController;
 use App\Http\Requests\StoreIdea;
 use App\Http\Requests\UpdateIdea;
-use App\Models\Feature;
 use App\Models\Idea;
 use App\Transformers\IdeaTransformer;
 use Fractal;
@@ -39,7 +38,7 @@ class IdeaController extends APIController
      */
     public function store(StoreIdea $request)
     {
-        $idea = Idea::create($request->except(['categories']));
+        $idea = Idea::create($request->except(['categories', 'features']));
 
         // sync categories if there are some
         if ($request->get('categories', false)) {
@@ -56,15 +55,8 @@ class IdeaController extends APIController
         }
 
         // create features
-        if ($request->get('features', false)) {
-            foreach ($request->get('features', []) as $feature) {
-                $validator = Validator::make($request->all(), Feature::$upsertValidationRules);
-                if ($validator->fails()) {
-                    dd('test');
-                }
-
-            }
-            $idea->categories()->sync($request->get('categories'));
+        if ($request->get('features', [])) {
+            $idea->features()->createMany($request->get('features'));
         }
 
         return Fractal::create($idea, new IdeaTransformer);

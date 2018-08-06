@@ -37,15 +37,20 @@ class StoreIdea extends FormRequest
             'visible' => [
                 'required',
             ],
-            'categories' => [
-                'array',
-            ],
             'tags' => [
                 'array',
             ],
             'description' => [
                 'required',
-            ]
+            ],
+            'categories' => [
+                'array',
+            ],
+            'features.*.role' => 'required',
+            'features.*.task' => 'required',
+            'features.*.goal' => 'required',
+            'features.*.condition_time' => 'required_with:features.*.condition_event',
+            'features.*.condition_event' => 'required_with:features.*.condition_time',
         ];
     }
 

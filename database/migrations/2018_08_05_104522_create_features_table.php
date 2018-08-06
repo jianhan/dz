@@ -22,7 +22,7 @@ class CreateFeaturesTable extends Migration
             $table->enum('priority', ['nice to have', 'should have', 'must have'])->nullable()->default(null);
             $table->enum('condition_time', ['before', 'when', 'after'])->nullable()->default(null);
             $table->string('condition_event')->nullable()->default(null);
-            $table->text('notes');
+            $table->text('notes')->nullable()->default(null);
             $table->softDeletes();
             $table->timestamps();
 
