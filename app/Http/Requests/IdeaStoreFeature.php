@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Feature;
 use Dingo\Api\Http\FormRequest;
 
-class IdeaDetachCategories extends FormRequest
+class IdeaStoreFeature extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +24,6 @@ class IdeaDetachCategories extends FormRequest
      */
     public function rules()
     {
-        return [
-            'ids' => 'required|array',
-        ];
+        return Feature::$featureValidationRules;
     }
 }

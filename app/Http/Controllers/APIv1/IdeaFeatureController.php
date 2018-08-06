@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\APIv1;
 
 use App\Http\Controllers\APIController;
+use App\Http\Requests\IdeaStoreFeature;
 use App\Models\Feature;
 use App\Models\Idea;
 use App\Transformers\FeatureTransformer;
+use App\Transformers\IdeaTransformer;
 use Fractal;
 use Illuminate\Http\Request;
 use League\Fractal\Serializer\JsonApiSerializer;
@@ -32,9 +34,11 @@ class IdeaFeatureController extends APIController
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Idea $idea, Request $request)
+    public function store(Idea $idea, IdeaStoreFeature $request)
     {
-        //
+        $idea->features()->create($request->validated());
+
+        return Fractal::create($idea, new IdeaTransformer);
     }
 
     /**
@@ -45,7 +49,7 @@ class IdeaFeatureController extends APIController
      */
     public function show(Idea $idea, Feature $feature)
     {
-        //
+        return Fractal::create($feature, new FeatureTransformer);
     }
 
     /**
@@ -57,7 +61,7 @@ class IdeaFeatureController extends APIController
      */
     public function update(Idea $idea, Request $request, Feature $feature)
     {
-        //
+
     }
 
     /**

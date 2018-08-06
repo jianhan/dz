@@ -55,7 +55,7 @@ class IdeaTransformer extends Fractal\TransformerAbstract
 
     public function includeFeatures(Idea $idea)
     {
-        return $this->collection($idea->features()->orderByPriority(), new FeatureTransformer, 'features');
+        return $this->collection($idea->features()->orderByPriority()->get(), new FeatureTransformer, 'features');
     }
 }
 
