@@ -19,7 +19,7 @@ class CreateFeaturesTable extends Migration
             $table->string('task');
             $table->string('goal');
             $table->unsignedInteger('display_order')->default(0);
-            $table->enum('priority', ['nice to have', 'should have', 'must have'])->default('should have');
+            $table->enum('priority', ['nice to have', 'should have', 'must have'])->nullable()->default(null);
             $table->enum('condition_time', ['before', 'when', 'after'])->nullable()->default(null);
             $table->string('condition_event')->nullable()->default(null);
             $table->text('notes');

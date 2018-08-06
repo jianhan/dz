@@ -5,6 +5,7 @@ namespace App\Http\Controllers\APIv1;
 use App\Http\Controllers\APIController;
 use App\Http\Requests\StoreIdea;
 use App\Http\Requests\UpdateIdea;
+use App\Models\Feature;
 use App\Models\Idea;
 use App\Transformers\IdeaTransformer;
 use Fractal;
@@ -52,6 +53,18 @@ class IdeaController extends APIController
                 array_push($tags, Tag::findOrCreate($tag, 'ideasTag'));
             }
             $idea->attachTags($tags);
+        }
+
+        // create features
+        if ($request->get('features', false)) {
+            foreach ($request->get('features', []) as $feature) {
+                $validator = Validator::make($request->all(), Feature::$upsertValidationRules);
+                if ($validator->fails()) {
+                    dd('test');
+                }
+
+            }
+            $idea->categories()->sync($request->get('categories'));
         }
 
         return Fractal::create($idea, new IdeaTransformer);

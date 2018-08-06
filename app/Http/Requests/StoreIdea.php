@@ -25,9 +25,6 @@ class StoreIdea extends FormRequest
      */
     public function rules()
     {
-        $this->slug = !isset($this->slug) || $this->slug == '' ? str_slug($this->name, '-') : str_slug($this->slug,
-            '-');
-
         return [
             'name' => [
                 'required',
@@ -50,5 +47,21 @@ class StoreIdea extends FormRequest
                 'required',
             ]
         ];
+    }
+
+    public function getValidatorInstance()
+    {
+        $this->autoFillSlug();
+        return parent::getValidatorInstance();
+    }
+
+    protected function autoFillSlug()
+    {
+        $slug = $this->request->get('slug', '');
+        $name = $this->request->get('name', '');
+        $slug = $slug == '' ? str_slug($name, '-') : str_slug($slug, '-');
+        $this->merge([
+            'slug' => $slug
+        ]);
     }
 }
