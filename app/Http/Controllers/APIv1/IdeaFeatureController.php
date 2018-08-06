@@ -20,7 +20,8 @@ class IdeaFeatureController extends APIController
     public function index(Idea $idea, Request $request)
     {
         return Fractal::create()
-            ->collection($idea->features, new FeatureTransformer, 'features')
+            ->collection($idea->features()->orderByPriority()->get(),
+                new FeatureTransformer, 'features')
             ->serializeWith(new JsonApiSerializer)
             ->toArray();
     }

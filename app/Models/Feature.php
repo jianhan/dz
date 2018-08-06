@@ -49,6 +49,23 @@ class Feature extends Model
     }
 
     /**
+     * Local scope to define customise ordering for priority field.
+     *
+     * @param $query
+     * @param string $dir
+     * @return mixed
+     */
+    public function scopeOrderByPriority($query, $dir = 'ASC')
+    {
+        $rawOrder = "FIELD(priority, 'nice to have', 'should have', 'must have') DESC";
+        if ($dir == 'DESC') {
+            $rawOrder = "FIELD(priority, 'must have','should have', 'nice to have') DESC";
+        }
+
+        return $query->orderByRaw(\DB::raw($rawOrder));
+    }
+
+    /**
      * idea defines one to many relationship between features and idea.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
