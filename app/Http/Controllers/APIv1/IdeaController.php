@@ -118,6 +118,16 @@ class IdeaController extends APIController
             }
         }
 
+        // update features
+        foreach ($request->get('features', []) as $feature) {
+            if (isset($feature['id'])) {
+                $idea->features()->where(['id' => $feature['id']])->update($feature);
+            } else {
+                $idea->features()->create($feature);
+            }
+        }
+
+        // update idea
         $idea->update($request->only(['name', 'slug', 'visible', 'description', 'app_type_id']));
 
         return Fractal::create()

@@ -25,7 +25,7 @@ class UpdateIdea extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => [
                 'required',
                 Rule::unique(Idea::getModel()->getTable(), 'name')->ignore(request()->route()->parameter('idea')->id),
@@ -47,8 +47,10 @@ class UpdateIdea extends FormRequest
             'tags_option' => Rule::in(['sync', 'add', 'detach']),
             'description' => [
                 'required',
-            ]
+            ],
         ];
+
+        return array_merge($rules, StoreIdea::getFeatureValidationRules());
     }
 
     /**

@@ -9,6 +9,22 @@ use Illuminate\Validation\Rule;
 class StoreIdea extends FormRequest
 {
     /**
+     * getFeatureValidationRules returns common rules for features.
+     *
+     * @return array
+     */
+    public static function getFeatureValidationRules(): array
+    {
+        return [
+            'features.*.role' => 'required',
+            'features.*.task' => 'required',
+            'features.*.goal' => 'required',
+            'features.*.condition_time' => 'required_with:features.*.condition_event',
+            'features.*.condition_event' => 'required_with:features.*.condition_time',
+        ];
+    }
+
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -25,7 +41,7 @@ class StoreIdea extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => [
                 'required',
                 Rule::unique(Idea::getModel()->getTable(), 'name'),
@@ -46,12 +62,9 @@ class StoreIdea extends FormRequest
             'categories' => [
                 'array',
             ],
-            'features.*.role' => 'required',
-            'features.*.task' => 'required',
-            'features.*.goal' => 'required',
-            'features.*.condition_time' => 'required_with:features.*.condition_event',
-            'features.*.condition_event' => 'required_with:features.*.condition_time',
         ];
+
+        return array_merge($rules, self::getFeatureValidationRules());
     }
 
     /**

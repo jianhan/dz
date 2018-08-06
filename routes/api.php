@@ -75,5 +75,6 @@ $api->version('v1', function ($api) {
 app('Dingo\Api\Exception\Handler')->register(function (
     QueryException $exception
 ) {
+    dd($exception);
     throw new Symfony\Component\HttpKernel\Exception\HttpException(500, "Unable to fulfill request");
 });
