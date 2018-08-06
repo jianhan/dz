@@ -118,12 +118,12 @@ class Idea extends Model
     }
 
     /**
-     * stories defines one to many relationship between idea and stories.
+     * stories defines one to many relationship between idea and features.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function stories()
+    public function features()
     {
-        return $this->hasMany('App\Models\Story');
+        return $this->hasMany('App\Models\Feature');
     }
 }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Story extends Model
+class Feature extends Model
 {
     use SoftDeletes;
 
@@ -19,7 +19,7 @@ class Story extends Model
     ];
 
     /**
-     * idea defines one to many relationship between story and idea.
+     * idea defines one to many relationship between features and idea.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
