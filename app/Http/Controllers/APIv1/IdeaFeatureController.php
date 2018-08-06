@@ -4,6 +4,7 @@ namespace App\Http\Controllers\APIv1;
 
 use App\Http\Controllers\APIController;
 use App\Http\Requests\IdeaStoreFeature;
+use App\Http\Requests\IdeaUpdateFeature;
 use App\Models\Feature;
 use App\Models\Idea;
 use App\Transformers\FeatureTransformer;
@@ -59,9 +60,11 @@ class IdeaFeatureController extends APIController
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Idea $idea, Request $request, Feature $feature)
+    public function update(Idea $idea, IdeaUpdateFeature $request, Feature $feature)
     {
+        $feature->update($request->validated());
 
+        return Fractal::create($feature, new FeatureTransformer);
     }
 
     /**
@@ -72,6 +75,8 @@ class IdeaFeatureController extends APIController
      */
     public function destroy(Idea $idea, Feature $feature)
     {
-        //
+        $feature->delete();
+
+        return Fractal::create($idea, new IdeaTransformer);
     }
 }
