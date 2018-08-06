@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Feature;
 use App\Models\Idea;
 use Dingo\Api\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -50,7 +51,7 @@ class UpdateIdea extends FormRequest
             ],
         ];
 
-        return array_merge($rules, StoreIdea::getFeatureValidationRules());
+        return array_merge($rules, Feature::$multiplyFeaturesValidationRules);
     }
 
     /**

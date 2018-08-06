@@ -19,6 +19,32 @@ class Feature extends Model
     ];
 
     /**
+     * $multiplyFeaturesValidationRules defines validation rules for multi features upserts.
+     *
+     * @var array
+     */
+    public static $multiplyFeaturesValidationRules = [
+        'features.*.role' => 'required',
+        'features.*.task' => 'required',
+        'features.*.goal' => 'required',
+        'features.*.condition_time' => 'required_with:features.*.condition_event',
+        'features.*.condition_event' => 'required_with:features.*.condition_time',
+    ];
+
+    /**
+     * $featureValidationRules defines validation rule for upsert single record.
+     *
+     * @var array
+     */
+    public static $featureValidationRules = [
+        'role' => 'required',
+        'task' => 'required',
+        'goal' => 'required',
+        'condition_time' => 'required_with:condition_event',
+        'condition_event' => 'required_with:condition_time',
+    ];
+
+    /**
      * Mutator used to return empty string if value is null.
      *
      * @param $value

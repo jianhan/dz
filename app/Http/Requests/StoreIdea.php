@@ -2,28 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Feature;
 use App\Models\Idea;
 use Dingo\Api\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class StoreIdea extends FormRequest
 {
-    /**
-     * getFeatureValidationRules returns common rules for features.
-     *
-     * @return array
-     */
-    public static function getFeatureValidationRules(): array
-    {
-        return [
-            'features.*.role' => 'required',
-            'features.*.task' => 'required',
-            'features.*.goal' => 'required',
-            'features.*.condition_time' => 'required_with:features.*.condition_event',
-            'features.*.condition_event' => 'required_with:features.*.condition_time',
-        ];
-    }
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -64,7 +49,7 @@ class StoreIdea extends FormRequest
             ],
         ];
 
-        return array_merge($rules, self::getFeatureValidationRules());
+        return array_merge($rules, Feature::$multiplyFeaturesValidationRules);
     }
 
     /**
