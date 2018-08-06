@@ -49,12 +49,20 @@ class StoreIdea extends FormRequest
         ];
     }
 
+    /**
+     * getValidatorInstance overwrites parent method to do some pre-validation process.
+     *
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
     public function getValidatorInstance()
     {
         $this->autoFillSlug();
         return parent::getValidatorInstance();
     }
 
+    /**
+     * autoFillSlug automatically filled slug with name if it is not presented.
+     */
     protected function autoFillSlug()
     {
         $slug = $this->request->get('slug', '');

@@ -25,9 +25,6 @@ class UpdateIdea extends FormRequest
      */
     public function rules()
     {
-        $this->slug = !isset($this->slug) || $this->slug == '' ? str_slug($this->name, '-') : str_slug($this->slug,
-            '-');
-
         return [
             'name' => [
                 'required',
@@ -52,5 +49,29 @@ class UpdateIdea extends FormRequest
                 'required',
             ]
         ];
+    }
+
+    /**
+     * getValidatorInstance overwrites parent method to do some pre-validation process.
+     *
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function getValidatorInstance()
+    {
+        $this->autoFillSlug();
+        return parent::getValidatorInstance();
+    }
+
+    /**
+     * autoFillSlug automatically filled slug with name if it is not presented.
+     */
+    protected function autoFillSlug()
+    {
+        $slug = $this->request->get('slug', '');
+        $name = $this->request->get('name', '');
+        $slug = $slug == '' ? str_slug($name, '-') : str_slug($slug, '-');
+        $this->merge([
+            'slug' => $slug
+        ]);
     }
 }
