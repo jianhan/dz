@@ -49,7 +49,7 @@ class StoreIdea extends FormRequest
             ],
         ];
 
-        return array_merge($rules, Feature::$multiplyFeaturesValidationRules);
+        return array_merge($rules, Feature::$manyFeaturesValidationRules);
     }
 
     /**

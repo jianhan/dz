@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\APIv1;
 
 use App\Http\Controllers\APIController;
+use App\Http\Requests\IdeaDestroyManyFeatures;
 use App\Http\Requests\IdeaStoreFeature;
+use App\Http\Requests\IdeaStoreManyFeatures;
 use App\Http\Requests\IdeaUpdateFeature;
 use App\Models\Feature;
 use App\Models\Idea;
@@ -76,6 +78,34 @@ class IdeaFeatureController extends APIController
     public function destroy(Idea $idea, Feature $feature)
     {
         $feature->delete();
+
+        return Fractal::create($idea, new IdeaTransformer);
+    }
+
+    /**
+     * destroyMany delete many features at once.
+     *
+     * @param Idea $idea
+     * @param IdeaDestroyManyFeatures $request
+     * @return \Spatie\Fractalistic\Fractal
+     */
+    public function destroyMany(Idea $idea, IdeaDestroyManyFeatures $request)
+    {
+        $idea->features()->whereIn('id', $request->validated()['ids'])->delete();
+
+        return Fractal::create($idea, new IdeaTransformer);
+    }
+
+    /**
+     * storeMany create many features for idea.
+     *
+     * @param Idea $idea
+     * @param IdeaStoreManyFeatures $request
+     * @return \Spatie\Fractalistic\Fractal
+     */
+    public function storeMany(Idea $idea, IdeaStoreManyFeatures $request)
+    {
+        $idea->features()->createMany($request->validated()['features']);
 
         return Fractal::create($idea, new IdeaTransformer);
     }

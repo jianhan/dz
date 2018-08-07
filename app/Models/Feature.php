@@ -19,11 +19,11 @@ class Feature extends Model
     ];
 
     /**
-     * $multiplyFeaturesValidationRules defines validation rules for multi features upserts.
+     * $manyFeaturesValidationRules defines validation rules for multi features upserts.
      *
      * @var array
      */
-    public static $multiplyFeaturesValidationRules = [
+    public static $manyFeaturesValidationRules = [
         'features.*.role' => 'required',
         'features.*.task' => 'required',
         'features.*.goal' => 'required',
