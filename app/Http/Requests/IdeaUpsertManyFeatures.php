@@ -6,7 +6,7 @@ use App\Models\Feature;
 use Dingo\Api\Http\FormRequest;
 use function array_merge;
 
-class IdeaStoreManyFeatures extends FormRequest
+class IdeaUpsertManyFeatures extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

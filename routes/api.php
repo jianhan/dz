@@ -64,8 +64,8 @@ $api->version('v1', function ($api) {
             // Features
             $api->delete('ideas/{idea}/features/destroy-many',
                 'IdeaFeatureController@destroyMany')->name('ideas.features.destroy-many');
-            $api->post('ideas/{idea}/features/store-many',
-                'IdeaFeatureController@storeMany')->name('ideas.features.store-many');
+            $api->post('ideas/{idea}/features/upsert-many',
+                'IdeaFeatureController@upsertMany')->name('ideas.features.upsert-many');
             $api->resource('ideas.features', 'IdeaFeatureController');
         });
 });

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\APIv1;
 use App\Http\Controllers\APIController;
 use App\Http\Requests\IdeaDestroyManyFeatures;
 use App\Http\Requests\IdeaStoreFeature;
-use App\Http\Requests\IdeaStoreManyFeatures;
 use App\Http\Requests\IdeaUpdateFeature;
+use App\Http\Requests\IdeaUpsertManyFeatures;
 use App\Models\Feature;
 use App\Models\Idea;
 use App\Transformers\FeatureTransformer;
@@ -97,16 +97,23 @@ class IdeaFeatureController extends APIController
     }
 
     /**
-     * storeMany create many features for idea.
+     * upsertMany create / update many features for idea.
      *
      * @param Idea $idea
-     * @param IdeaStoreManyFeatures $request
+     * @param IdeaUpsertManyFeatures $request
      * @return \Spatie\Fractalistic\Fractal
      */
-    public function storeMany(Idea $idea, IdeaStoreManyFeatures $request)
+    public function upsertMany(Idea $idea, IdeaUpsertManyFeatures $request)
     {
-        $idea->features()->createMany($request->validated()['features']);
+        foreach ($request->validated()['features'] as $feature) {
+            if (isset($feature['id'])) {
+                $idea->features()->where(['id' => $feature['id']])->update($feature);
+            } else {
+                $idea->features()->create($feature);
+            }
+        }
 
         return Fractal::create($idea, new IdeaTransformer);
     }
+
 }
