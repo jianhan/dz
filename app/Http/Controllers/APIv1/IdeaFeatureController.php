@@ -115,5 +115,4 @@ class IdeaFeatureController extends APIController
 
         return Fractal::create($idea, new IdeaTransformer);
     }
-
 }
