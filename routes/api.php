@@ -24,7 +24,13 @@ use Illuminate\Http\Request;
 | Defines all dingo api routes
 |
 */
+
+app('Dingo\Api\Auth\Auth')->extend('basic', function ($app) {
+    return new Dingo\Api\Auth\Provider\Basic($app['auth'], 'email');
+});
+
 $api = app('Dingo\Api\Routing\Router');
+
 $api->version('v1', function ($api) {
     $api->group([
         'middleware' => ['bindings'],
@@ -34,9 +40,9 @@ $api->version('v1', function ($api) {
         function ($api) {
             // user
             $api->get('/get-user', 'UserController@getUser')->name('get-user');
+
             // Category related routes
             $api->resource('categories', 'CategoryController');
-
             $api->delete('categories/{category}/ideas/detach',
                 'CategoryIdeaController@detach')->name('categories.ideas.detach');
             $api->post('categories/{category}/ideas/attach',
@@ -79,6 +85,6 @@ $api->version('v1', function ($api) {
 app('Dingo\Api\Exception\Handler')->register(function (
     QueryException $exception
 ) {
-    dd($exception);
-    throw new Symfony\Component\HttpKernel\Exception\HttpException(500, "Unable to fulfill request");
+    throw new Symfony\Component\HttpKernel\Exception\HttpException(500,
+        "Unable to fulfill request" . $exception->getMessage());
 });
