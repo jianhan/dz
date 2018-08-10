@@ -14,11 +14,12 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('layout', require('./components/layout').default);
+Vue.component('layout', require('./layouts/main').default);
 
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'babel-polyfill'
+
 import Vuetify from 'vuetify'
 import VueRouter from 'vue-router'
 

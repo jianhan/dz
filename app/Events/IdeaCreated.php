@@ -31,6 +31,6 @@ class IdeaCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('ideas.created');
+        return new Channel('ideas');
     }
 }

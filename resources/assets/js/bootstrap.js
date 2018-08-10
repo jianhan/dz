@@ -60,7 +60,7 @@ window.io = require('socket.io-client');
 if (typeof io !== 'undefined') {
     window.Echo = new Echo({
         broadcaster: 'socket.io',
-        host: '172.22.0.4:6001',
+        host: window.location.hostname + ':6001',
     });
 }
 

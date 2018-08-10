@@ -16,10 +16,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 /*
 |--------------------------------------------------------------------------
 | Dingo API Routes
@@ -36,6 +32,8 @@ $api->version('v1', function ($api) {
         'namespace' => 'App\\Http\\Controllers\\APIv1'
     ],
         function ($api) {
+            // user
+            $api->get('/get-user', 'UserController@getUser')->name('get-user');
             // Category related routes
             $api->resource('categories', 'CategoryController');
 
