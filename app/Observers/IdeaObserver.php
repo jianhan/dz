@@ -2,7 +2,10 @@
 
 namespace App\Observers;
 
+use App\Events\IdeaCreated;
 use App\Models\Idea;
+use App\Transformers\IdeaTransformer;
+use Fractal;
 
 class IdeaObserver
 {
@@ -18,4 +21,16 @@ class IdeaObserver
         $idea->tags()->detach();
         $idea->categories()->detach();
     }
+
+    /**
+     * Handle to the Idea "created" event.
+     *
+     * @param  \App\User $user
+     * @return void
+     */
+    public function created(Idea $idea)
+    {
+        event(new IdeaCreated(Fractal::create($idea, new IdeaTransformer)->toArray()));
+    }
+
 }

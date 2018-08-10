@@ -73,7 +73,11 @@
         data: () => ({
             drawer: null
         }),
-
+        mounted() {
+            Echo.channel(`ideas.created`).listen('IdeaCreated', (e) => {
+                console.log(e);
+            })
+        },
         props: {
             source: String
         }
