@@ -58,6 +58,7 @@ if (token) {
 
 import Echo from "laravel-echo"
 import * as env from './.env'
+import * as mutationTypes from './store/modules/mutation_types'
 
 window.io = require('socket.io-client');
 // Have this in case you stop running your laravel echo server
@@ -69,3 +70,6 @@ if (typeof io !== 'undefined') {
 }
 
 window.env = env
+
+window.mutationTypes = mutationTypes
+

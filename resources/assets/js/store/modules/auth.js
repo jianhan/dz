@@ -31,7 +31,6 @@ const actions = {
         axios.post(env.login_url, {email: email, password: password}).then(r => {
             commit('setIsLoggingIn', false)
         }).catch(e => {
-            console.log(e)
             commit('setIsLoggingIn', false)
             let statusCode = _.get(e, 'response.status', 500)
             if (statusCode == 422) {
@@ -50,34 +49,34 @@ const actions = {
 
 // mutations
 const mutations = {
-    setUser(state, user) {
+    [mutationTypes.SET_USER](state, user) {
         state.user = user
     },
-    unsetUser(state) {
+    [mutationTypes.UNSET_USER](state) {
         state.user = null
     },
-    setIsLoggingIn(state, isLoggingIn) {
+    [mutationTypes.SET_IS_LOGGING_IN](state, isLoggingIn) {
         state.isLoggingIn = isLoggingIn
     },
-    setLoginErrors(state, loginErrors) {
+    [mutationTypes.SET_LOGIN_ERRORS](state, loginErrors) {
         state.loginErrors = loginErrors
     },
-    setLoginErrorMessage(state, loginErrorMessage) {
+    [mutationTypes.SET_LOGIN_ERROR_MESSAGE](state, loginErrorMessage) {
         state.loginErrorMessage = loginErrorMessage
     },
-    setIsLoggingOut(state, isLoggingOut) {
+    [mutationTypes.SET_IS_LOGGING_OUT](state, isLoggingOut) {
         state.isLoggingOut = isLoggingOut
     },
-    setLogoutErrorMessage(state, logoutErrorMessage) {
+    [mutationTypes.SET_LOGOUT_ERROR_MESSAGE](state, logoutErrorMessage) {
         state.logoutErrorMessage = logoutErrorMessage
     },
-    resetAllAuth(state) {
+    [mutationTypes.RESET_ALL_AUTH](state) {
         state.user = null
         state.isLoggingIn = false
         state.loginErrors = []
         state.loginErrorMessage = ''
     },
-    resetAllUnAuth(state) {
+    [mutationTypes.RESET_ALL_UN_AUTH](state) {
         state.isLoggingOut = false
         state.logoutErrorMessage = ''
     },

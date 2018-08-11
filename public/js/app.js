@@ -20078,6 +20078,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(187);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__env__ = __webpack_require__(452);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_modules_mutation_types__ = __webpack_require__(453);
 window._ = __webpack_require__(165);
 window.Popper = __webpack_require__(166).default;
 
@@ -20140,6 +20141,7 @@ if (token) {
 
 
 
+
 window.io = __webpack_require__(188);
 // Have this in case you stop running your laravel echo server
 if (typeof io !== 'undefined') {
@@ -20150,6 +20152,8 @@ if (typeof io !== 'undefined') {
 }
 
 window.env = __WEBPACK_IMPORTED_MODULE_1__env__;
+
+window.mutationTypes = __WEBPACK_IMPORTED_MODULE_2__store_modules_mutation_types__;
 
 /***/ }),
 /* 165 */
@@ -88682,6 +88686,10 @@ var index_esm = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+var _mutations;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 // initial state
 var state = {
     // authentication
@@ -88718,7 +88726,6 @@ var state = {
         axios.post(env.login_url, { email: email, password: password }).then(function (r) {
             commit('setIsLoggingIn', false);
         }).catch(function (e) {
-            console.log(e);
             commit('setIsLoggingIn', false);
             var statusCode = _.get(e, 'response.status', 500);
             if (statusCode == 422) {
@@ -88737,39 +88744,29 @@ var state = {
 };
 
 // mutations
-var mutations = {
-    setUser: function setUser(state, user) {
-        state.user = user;
-    },
-    unsetUser: function unsetUser(state) {
-        state.user = null;
-    },
-    setIsLoggingIn: function setIsLoggingIn(state, isLoggingIn) {
-        state.isLoggingIn = isLoggingIn;
-    },
-    setLoginErrors: function setLoginErrors(state, loginErrors) {
-        state.loginErrors = loginErrors;
-    },
-    setLoginErrorMessage: function setLoginErrorMessage(state, loginErrorMessage) {
-        state.loginErrorMessage = loginErrorMessage;
-    },
-    setIsLoggingOut: function setIsLoggingOut(state, isLoggingOut) {
-        state.isLoggingOut = isLoggingOut;
-    },
-    setLogoutErrorMessage: function setLogoutErrorMessage(state, logoutErrorMessage) {
-        state.logoutErrorMessage = logoutErrorMessage;
-    },
-    resetAllAuth: function resetAllAuth(state) {
-        state.user = null;
-        state.isLoggingIn = false;
-        state.loginErrors = [];
-        state.loginErrorMessage = '';
-    },
-    resetAllUnAuth: function resetAllUnAuth(state) {
-        state.isLoggingOut = false;
-        state.logoutErrorMessage = '';
-    }
-};
+var mutations = (_mutations = {}, _defineProperty(_mutations, mutationTypes.SET_USER, function (state, user) {
+    state.user = user;
+}), _defineProperty(_mutations, mutationTypes.UNSET_USER, function (state) {
+    state.user = null;
+}), _defineProperty(_mutations, mutationTypes.SET_IS_LOGGING_IN, function (state, isLoggingIn) {
+    state.isLoggingIn = isLoggingIn;
+}), _defineProperty(_mutations, mutationTypes.SET_LOGIN_ERRORS, function (state, loginErrors) {
+    state.loginErrors = loginErrors;
+}), _defineProperty(_mutations, mutationTypes.SET_LOGIN_ERROR_MESSAGE, function (state, loginErrorMessage) {
+    state.loginErrorMessage = loginErrorMessage;
+}), _defineProperty(_mutations, mutationTypes.SET_IS_LOGGING_OUT, function (state, isLoggingOut) {
+    state.isLoggingOut = isLoggingOut;
+}), _defineProperty(_mutations, mutationTypes.SET_LOGOUT_ERROR_MESSAGE, function (state, logoutErrorMessage) {
+    state.logoutErrorMessage = logoutErrorMessage;
+}), _defineProperty(_mutations, mutationTypes.RESET_ALL_AUTH, function (state) {
+    state.user = null;
+    state.isLoggingIn = false;
+    state.loginErrors = [];
+    state.loginErrorMessage = '';
+}), _defineProperty(_mutations, mutationTypes.RESET_ALL_UN_AUTH, function (state) {
+    state.isLoggingOut = false;
+    state.logoutErrorMessage = '';
+}), _mutations);
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
@@ -89033,6 +89030,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var api_base_url = 'http://dz.local/';
 var login_url = api_base_url + 'login';
 var logout_url = api_base_url + 'logout';
+
+/***/ }),
+/* 453 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_USER", function() { return SET_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNSET_USER", function() { return UNSET_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_IS_LOGGING_IN", function() { return SET_IS_LOGGING_IN; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_LOGIN_ERRORS", function() { return SET_LOGIN_ERRORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_LOGIN_ERROR_MESSAGE", function() { return SET_LOGIN_ERROR_MESSAGE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_IS_LOGGING_OUT", function() { return SET_IS_LOGGING_OUT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_LOGOUT_ERROR_MESSAGE", function() { return SET_LOGOUT_ERROR_MESSAGE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RESET_ALL_AUTH", function() { return RESET_ALL_AUTH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RESET_ALL_UN_AUTH", function() { return RESET_ALL_UN_AUTH; });
+var SET_USER = 'SET_USER';
+var UNSET_USER = 'UNSET_USER';
+var SET_IS_LOGGING_IN = 'SET_IS_LOGGING_IN';
+var SET_LOGIN_ERRORS = 'SET_LOGIN_ERRORS';
+var SET_LOGIN_ERROR_MESSAGE = 'SET_LOGIN_ERROR_MESSAGE';
+var SET_IS_LOGGING_OUT = 'SET_IS_LOGGING_OUT';
+var SET_LOGOUT_ERROR_MESSAGE = 'SET_LOGOUT_ERROR_MESSAGE';
+var RESET_ALL_AUTH = 'RESET_ALL_AUTH';
+var RESET_ALL_UN_AUTH = 'RESET_ALL_UN_AUTH';
 
 /***/ })
 /******/ ]);
