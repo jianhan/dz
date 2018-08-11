@@ -17,12 +17,18 @@ try {
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
+let httpStatus = require('http-status-codes');
 
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.interceptors.response.use(response => response, e => {
-    return Promise.reject(e.response);
+    // do not handle validation error
+    if (e.response.status === httpStatus.UNPROCESSABLE_ENTITY) {
+        return Promise.reject(e.response);
+    } else {
+        alert(123)
+    }
 });
 
 /**
@@ -57,8 +63,7 @@ if (token) {
 // });
 
 import Echo from "laravel-echo"
-import * as env from './.env'
-import * as mutationTypes from './store/modules/mutation_types'
+import * as envVars from './.env'
 
 window.io = require('socket.io-client');
 // Have this in case you stop running your laravel echo server
@@ -69,7 +74,4 @@ if (typeof io !== 'undefined') {
     });
 }
 
-window.env = env
-
-window.mutationTypes = mutationTypes
-
+window.envVars = envVars

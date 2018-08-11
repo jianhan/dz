@@ -1,3 +1,5 @@
+import * as mutationTypes from './mutation_types'
+
 // initial state
 const state = {
     // authentication
@@ -26,19 +28,19 @@ const getters = {
 // actions
 const actions = {
     login({commit, state}, {email, password}) {
-        commit('resetAllAuth', true)
-        commit('setIsLoggingIn', true)
-        axios.post(env.login_url, {email: email, password: password}).then(r => {
-            commit('setIsLoggingIn', false)
+        commit(mutationTypes.RESET_ALL_AUTH, true)
+        commit(mutationTypes.SET_IS_LOGGING_IN, true)
+        axios.post(envVars.login_url, {email: email, password: password}).then(r => {
+            commit(mutationTypes.SET_IS_LOGGING_IN, false)
         }).catch(e => {
-            commit('setIsLoggingIn', false)
-            let statusCode = _.get(e, 'response.status', 500)
+            commit(mutationTypes.SET_IS_LOGGING_IN, false)
+            let statusCode = _.get(e, 'status', 500)
             if (statusCode == 422) {
-                commit('setLoginErrors', _.get(e, 'response.data.errors'))
-                commit('setLoginErrorMessage', _.get(e, 'response.data.message'))
+                commit(mutationTypes.SET_LOGIN_ERRORS, _.get(e, 'data.errors'))
+                commit(mutationTypes.SET_LOGIN_ERROR_MESSAGE, _.get(e, 'data.message'))
             } else {
-                let errorString = _.get(e, 'response.data.message', _.get(e, 'response.statusText', 'System error'), 'System error')
-                commit('setLoginErrorMessage', errorString)
+                let errorString = _.get(e, 'data.message', _.get(e, 'statusText', 'System error'), 'System error')
+                commit(mutationTypes.SET_LOGIN_ERROR_MESSAGE, errorString)
             }
         });
     },
