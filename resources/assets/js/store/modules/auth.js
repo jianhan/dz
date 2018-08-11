@@ -26,11 +26,12 @@ const getters = {
 // actions
 const actions = {
     login({commit, state}, {email, password}) {
-        commit('resetAll', true)
+        commit('resetAllAuth', true)
         commit('setIsLoggingIn', true)
         axios.post(env.login_url, {email: email, password: password}).then(r => {
             commit('setIsLoggingIn', false)
         }).catch(e => {
+            console.log(e)
             commit('setIsLoggingIn', false)
             let statusCode = _.get(e, 'response.status', 500)
             if (statusCode == 422) {

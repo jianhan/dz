@@ -23,8 +23,9 @@
                     Fill your email and password to authenticate.
                 </v-card-text>
                 <v-form class="ma-3">
+                    -{{ loginErrors }}-
                     <v-alert
-                            :value="validationErrors.length > 0"
+                            :value="loginErrors.length > 0"
                             type="success"
                             transition="scale-transition"
                     >
@@ -55,6 +56,8 @@
 </template>
 
 <script>
+    import {mapGetters, mapState} from 'vuex'
+
     export default {
         name: "LoginForm",
         data() {
@@ -62,13 +65,27 @@
                 dialog: false,
                 email: '',
                 password: '',
-                validationErrors: [],
-                errorString: ''
             }
+        },
+        computed: {
+            localComputed() {
+            },
+            ...mapState({
+                user: state => state.auth.user,
+                loginErrors: state => state.auth.loginErrors,
+                loginErrorMessage: state => state.auth.loginErrorMessage
+            }),
+            ...mapGetters([
+                'auth/isUserSet',
+                'auth/hasLoginErrors',
+            ])
         },
         methods: {
             handleLogin() {
-
+                this.$store.dispatch('auth/login', {
+                    email: this.email,
+                    password: this.password
+                })
             }
         }
     }

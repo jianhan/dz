@@ -18588,6 +18588,9 @@ function normalizeComponent (
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(447);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -18644,6 +18647,9 @@ function normalizeComponent (
 //
 //
 //
+//
+
+
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     name: "LoginForm",
@@ -18651,14 +18657,30 @@ function normalizeComponent (
         return {
             dialog: false,
             email: '',
-            password: '',
-            validationErrors: [],
-            errorString: ''
+            password: ''
         };
     },
 
+    computed: _extends({
+        localComputed: function localComputed() {}
+    }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])({
+        user: function user(state) {
+            return state.auth.user;
+        },
+        loginErrors: function loginErrors(state) {
+            return state.auth.loginErrors;
+        },
+        loginErrorMessage: function loginErrorMessage(state) {
+            return state.auth.loginErrorMessage;
+        }
+    }), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])(['auth/isUserSet', 'auth/hasLoginErrors'])),
     methods: {
-        handleLogin: function handleLogin() {}
+        handleLogin: function handleLogin() {
+            this.$store.dispatch('auth/login', {
+                email: this.email,
+                password: this.password
+            });
+        }
     }
 });
 
@@ -20078,6 +20100,11 @@ try {
 window.axios = __webpack_require__(168);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.interceptors.response.use(function (response) {
+    return response;
+}, function (e) {
+    return Promise.reject(e.response);
+});
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
@@ -58197,7 +58224,7 @@ exports = module.exports = __webpack_require__(79)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -58529,11 +58556,16 @@ var render = function() {
                 "v-form",
                 { staticClass: "ma-3" },
                 [
+                  _vm._v(
+                    "\n                -" +
+                      _vm._s(_vm.loginErrors) +
+                      "-\n                "
+                  ),
                   _c(
                     "v-alert",
                     {
                       attrs: {
-                        value: _vm.validationErrors.length > 0,
+                        value: _vm.loginErrors.length > 0,
                         type: "success",
                         transition: "scale-transition"
                       }
@@ -87707,9 +87739,9 @@ var debug = "development" !== 'production';
 "use strict";
 /* unused harmony export Store */
 /* unused harmony export install */
-/* unused harmony export mapState */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return mapState; });
 /* unused harmony export mapMutations */
-/* unused harmony export mapGetters */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapGetters; });
 /* unused harmony export mapActions */
 /* unused harmony export createNamespacedHelpers */
 /**
@@ -88681,11 +88713,12 @@ var state = {
         var email = _ref2.email,
             password = _ref2.password;
 
-        commit('resetAll', true);
+        commit('resetAllAuth', true);
         commit('setIsLoggingIn', true);
         axios.post(env.login_url, { email: email, password: password }).then(function (r) {
             commit('setIsLoggingIn', false);
         }).catch(function (e) {
+            console.log(e);
             commit('setIsLoggingIn', false);
             var statusCode = _.get(e, 'response.status', 500);
             if (statusCode == 422) {
