@@ -24,6 +24,7 @@
     "laravel-echo": "^1.4.0",
     "material-design-icons-iconfont": "^3.0.3",
     "socket.io-client": "^2.1.1",
+    "vee-validate": "^2.1.0-beta.7",
     "vue-loader": "^14.2.2",
     "vue-router": "^3.0.1",
     "vuetify": "^1.1.10",

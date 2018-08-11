@@ -54,6 +54,7 @@ if (token) {
 // });
 
 import Echo from "laravel-echo"
+import * as env from './.env'
 
 window.io = require('socket.io-client');
 // Have this in case you stop running your laravel echo server
@@ -64,3 +65,4 @@ if (typeof io !== 'undefined') {
     });
 }
 
+window.env = env

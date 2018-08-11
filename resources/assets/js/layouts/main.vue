@@ -33,8 +33,8 @@
                 <!-- use router-link component for navigation. -->
                 <!-- specify the link by passing the `to` prop. -->
                 <!-- `<router-link>` will be rendered as an `<a>` tag by default -->
-                <router-link to="/foo">Go to Foo</router-link>
-                <router-link to="/bar">Go to Bar</router-link>
+                <router-link to="/foo">Go to Foo1</router-link>
+                <router-link to="/bar">Go to Bar2</router-link>
             </p>
             <!-- route outlet -->
             <!-- component matched by the route will render here -->
@@ -44,21 +44,7 @@
                         justify-center
                         align-center
                 >
-                    <v-flex text-xs-center>
-                        <v-tooltip left>
-                            <v-btn slot="activator" :href="source" icon large target="_blank">
-                                <v-icon large>code</v-icon>
-                            </v-btn>
-                            <span>Source</span>
-                        </v-tooltip>
-                        <v-tooltip right>
-                            <v-btn slot="activator" icon large href="https://codepen.io/johnjleider/pen/rJdVMq"
-                                   target="_blank">
-                                <v-icon large>mdi-codepen</v-icon>
-                            </v-btn>
-                            <span>Codepen</span>
-                        </v-tooltip>
-                    </v-flex>
+                    <login-form></login-form>
                 </v-layout>
             </v-container>
         </v-content>
