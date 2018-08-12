@@ -17,19 +17,10 @@ try {
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
-let httpStatus = require('http-status-codes');
 
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.axios.interceptors.response.use(response => response, e => {
-    // do not handle validation error
-    if (e.response.status === httpStatus.UNPROCESSABLE_ENTITY) {
-        return Promise.reject(e.response);
-    } else {
-        alert(123)
-    }
-});
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that

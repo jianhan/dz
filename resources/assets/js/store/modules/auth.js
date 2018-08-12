@@ -30,7 +30,7 @@ const actions = {
     login({commit, state}, {email, password}) {
         commit(mutationTypes.RESET_ALL_AUTH, true)
         commit(mutationTypes.SET_IS_LOGGING_IN, true)
-        axios.post(envVars.login_url, {email: email, password: password}).then(r => {
+        axios.delete(envVars.login_url, {email: email, password: password}).then(r => {
             commit(mutationTypes.SET_IS_LOGGING_IN, false)
         }).catch(e => {
             commit(mutationTypes.SET_IS_LOGGING_IN, false)

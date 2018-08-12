@@ -5,6 +5,13 @@ const state = {
     response: null,
 }
 
+// getters
+const getters = {
+    hasResponse: (state) => {
+        return state.response !== null
+    }
+}
+
 // mutations
 const mutations = {
     [mutationTypes.SET_RESPONSE](state, response) {
@@ -18,5 +25,6 @@ const mutations = {
 export default {
     namespaced: true,
     state,
+    getters,
     mutations
 }

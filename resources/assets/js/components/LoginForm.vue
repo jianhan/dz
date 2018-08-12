@@ -68,8 +68,6 @@
             }
         },
         computed: {
-            localComputed() {
-            },
             ...mapState({
                 user: state => state.auth.user,
                 loginErrors: state => state.auth.loginErrors,

@@ -16,6 +16,7 @@ window.Vue = require('vue');
 
 Vue.component('layout', require('./layouts/main').default);
 Vue.component('login-form', require('./components/LoginForm').default);
+Vue.component('global-errors', require('./components/GlobalErrors').default);
 
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
@@ -27,10 +28,20 @@ import {VAlert} from 'vuetify/es5/directives'
 import VueRouter from 'vue-router'
 import store from './store'
 import {sync} from 'vuex-router-sync'
+import * as mutationTypes from './store/modules/mutation_types'
 
 Vue.use(Vuetify)
 Vue.use(VueRouter)
 
+let httpStatus = require('http-status-codes');
+window.axios.interceptors.response.use(response => response, e => {
+    // do not handle validation error
+    if (e.response.status === httpStatus.UNPROCESSABLE_ENTITY) {
+        return Promise.reject(e.response);
+    }
+
+    store.commit('http_errors/' + mutationTypes.SET_RESPONSE, e.response)
+});
 
 // 0. If using a module system (e.g. via vue-cli), import Vue and VueRouter
 // and then call `Vue.use(VueRouter)`.
