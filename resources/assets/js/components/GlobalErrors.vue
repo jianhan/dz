@@ -1,17 +1,16 @@
 <template>
     <v-snackbar
-            v-model="show"
+            :value="hasResponse"
+            :timeout="0"
             :right="true"
-            :timeout="100000"
             :top="true"
             :vertical="true"
-            color="deep-purple lighten-2"
+            color="error"
     >
-        {{ text }}
-        {{ hasResponse }}
+        {{ message }}
         <v-btn
                 flat
-                @click="show = false"
+                @click="handleClose"
         >
             Close
         </v-btn>
@@ -20,22 +19,23 @@
 
 <script>
     import {mapGetters, mapState} from 'vuex'
+    import * as mutationTypes from '../store/modules/mutation_types'
 
     export default {
         name: "GlobalErrors",
-        data() {
-            return {
-                text: 'test',
-                show: true
-            }
-        },
         computed: {
             ...mapState({
                 response: state => state.http_errors.response,
             }),
             ...mapGetters('http_errors', [
                 'hasResponse',
+                'message'
             ])
+        },
+        methods: {
+            handleClose() {
+                this.$store.commit('http_errors/' + mutationTypes.UN_SET_RESPONSE)
+            }
         }
     }
 </script>

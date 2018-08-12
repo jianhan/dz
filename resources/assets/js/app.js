@@ -35,6 +35,7 @@ Vue.use(VueRouter)
 
 let httpStatus = require('http-status-codes');
 window.axios.interceptors.response.use(response => response, e => {
+    store.commit('http_errors/' + mutationTypes.UN_SET_RESPONSE)
     // do not handle validation error
     if (e.response.status === httpStatus.UNPROCESSABLE_ENTITY) {
         return Promise.reject(e.response);
